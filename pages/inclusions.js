@@ -2,7 +2,7 @@
 function includeInclusions() {
     // Include the navigation bar
     const menuContainer = document.createElement('div');
-    menuContainer.innerHTML = '<nav><ul class="menu"><li><a href="index.html">Lorenzo Valente</a></li><li><a href="biography.html">Biography</a></li><li><a href="education.html">Education</a></li><li><a href="research.html">Research</a></li><li><a href="publications.html">Publications</a></li><li><a href="talks.html">Talks</a></li><li><a href="team.html">Team</a></li></ul></nav>';
+    menuContainer.innerHTML = '<nav><ul class="menu"><li><a href="../index.html">Lorenzo Valente</a></li><li><a href="biography.html">Biography</a></li><li><a href="education.html">Education</a></li><li><a href="research.html">Research</a></li><li><a href="publications.html">Publications</a></li><li><a href="talks.html">Talks</a></li><li><a href="team.html">Team</a></li></ul></nav>';
     document.body.prepend(menuContainer);
 
     // Include the footer
