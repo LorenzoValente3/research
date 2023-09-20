@@ -60,3 +60,9 @@ footer {
     padding: 14px 16px;
     text-decoration: none;
 }
+
+/* Change the link color on hover */
+.menu li a:hover {
+    background-color: #ddd;
+    color: black;
+}
