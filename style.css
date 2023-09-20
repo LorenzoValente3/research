@@ -39,3 +39,24 @@ footer {
     background-color: #333;
     color: #fff;
 }
+
+/* Style for the horizontal navigation bar */
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333; /* Background color of the navigation bar */
+}
+
+.menu li {
+    float: left; /* To arrange the elements horizontally */
+}
+
+.menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
