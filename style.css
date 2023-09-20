@@ -73,3 +73,22 @@ footer {
 }
 
 
+/* Style for the main content */
+#content {
+    display: flex; /* Use flexbox to create a flexible layout */
+    align-items: center; /* Vertically align text and image */
+}
+
+/* Style for the text content */
+.content-text {
+    flex: 1; /* Text occupies remaining space */
+    padding: 20px; /* Add padding to separate text from the image */
+}
+
+/* Style for the image */
+.content-image img {
+    max-width: 100%; /* Prevent the image from exceeding container width */
+    height: auto; /* Maintain image proportions */
+}
+
+
