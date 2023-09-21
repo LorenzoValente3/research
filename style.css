@@ -17,8 +17,8 @@ header h1 {
 }
 
 main {
-    max-width: 800px;
-    margin: 20px auto;
+    max-width: 100%;
+    margin: 0;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -44,7 +44,7 @@ li {
 }
 
 .menu li {
-    float: left; /* To arrange the elements horizontally */
+    float: left; /*To arrange the elements horizontally */
 }
 
 .menu li a {
@@ -95,7 +95,7 @@ footer {
 /* Style for the text content */
 .content-text {
     flex: 1; /* Text occupies remaining space */
-    padding: 20px; /* Add padding to separate text from the image */
+    padding: 40px; /* Add padding to separate text from the image */
 }
 /* Style for the image */
 .content-image img {
