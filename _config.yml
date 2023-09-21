@@ -1,0 +1,21 @@
+# Site settings
+title: Research | Lorenzo Valente
+description: Personal website about my research
+url: https://github.com/LorenzoValente3/research
+
+# Build settings
+markdown: kramdown
+theme: minima # Change to the Jekyll theme you want to use (optional)
+
+# Exclude files/folders from Jekyll processing (optional)
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Additional Jekyll configurations (optional)
+# Add any additional Jekyll configuration options here
