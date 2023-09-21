@@ -1,0 +1,30 @@
+/* stars.css */
+/* Style for the falling stars */
+.star {
+    position: fixed;
+    background: white;
+    width: 2px;
+    height: 2px;
+    animation: starFall 5s linear infinite;
+    opacity: 0; /* Initially hidden */
+  }
+  
+  /* Keyframes animation for the falling stars */
+@keyframes starFall {
+    0% {
+      transform: translateY(0) rotate(0);
+      opacity: 1;
+      box-shadow: none;
+    }
+    50% {
+      transform: translateY(50vh) rotate(180deg);
+      opacity: 0.5;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+      box-shadow: none;
+    }
+  }
+  

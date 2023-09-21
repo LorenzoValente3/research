@@ -17,8 +17,8 @@ header h1 {
 }
 
 main {
-    max-width: 100%;
-    margin: 0;
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -44,7 +44,7 @@ li {
 }
 
 .menu li {
-    float: left; /*To arrange the elements horizontally */
+    float: left; /* To arrange the elements horizontally */
 }
 
 .menu li a {
@@ -90,18 +90,24 @@ footer {
 #content {
     display: flex; /* Use flexbox to create a flexible layout */
     align-items: center; /* Vertically align text and image */
+    margin-bottom: 20px;
 }
 
 /* Style for the text content */
 .content-text {
     flex: 1; /* Text occupies remaining space */
     padding: 40px; /* Add padding to separate text from the image */
+    margin-bottom: 40px;
 }
 /* Style for the image */
 .content-image img {
     max-width: 75%; /* Prevent the image from exceeding container width */
     height: auto; /* Maintain image proportions */
     display: block; /* Imposta l'immagine come elemento "block" per utilizzare il margin auto */
-    margin: 0 auto 40px; /* Centra l'immagine orizzontalmente */
+    margin: 0 auto 10px; /* Centra l'immagine orizzontalmente */
+    margin-bottom: 80px;
 }
 
+.content-image {
+    margin-bottom: 20px; /* Aggiunge un margine inferiore di 20px */
+}
