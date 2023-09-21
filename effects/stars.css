@@ -27,4 +27,22 @@
       box-shadow: none;
     }
   }
-  
+/* Style for the welcome message */
+#welcome-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 48px; /* Increase the font size */
+  color: #d90000; /* Change the text color to a fancy blue */
+  opacity: 1;
+  transition: opacity 1s ease;
+  font-family: "Times New Roman", cursive; /* Apply a cursive font for a fancy look */
+  letter-spacing: 3px; /* Add letter spacing for a unique style */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add a subtle text shadow */
+  padding: 20px; /* Add padding around the text */
+  background-color: rgba(255, 255, 255, 0.5); /* Set background color to white with 50% opacity */
+  border-radius: 10px; /* Add border radius for rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow to the speech bubble */
+}
