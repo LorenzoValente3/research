@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lorenzo Valente</title>
+    <title> Home - Lorenzo Valente</title>
     <link rel="stylesheet" href="style.css">
-    <!-- <link rel="stylesheet" href="features/search_style.css"> -->
-
-    <!-- <link rel="stylesheet" href="effects/stars.css"> Link the stars.css file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <!-- Add Bootstrap CSS for responsive navigation -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body style="background-color: white;">
 
-    <!-- Navigation bar-->
-    <nav>
-        <ul class="menu">
-            <li><a href="pages/biography.html">Biography</a></li>
-            <li><a href="pages/research.html">Research</a></li>
-            <li><a href="pages/publications.html">Publications</a></li>
-            <li><a href="pages/talks.html">Talks</a></li>
-            
-            <!-- Add the search bar to the navigation bar -->
-            <!-- <li id="search-container">
-                <input type="text" id="search-input" placeholder="Search...">
-                <button id="search-button">Search</button>-->
-            </li> 
-        </ul>
+    <!-- Navigation bar using Bootstrap -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Lorenzo Valente</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/biography.html">Biography</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/research.html">Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/publications.html">Publications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/talks.html">Talks</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
     <header>
-        <hr><h1>Lorenzo Valente</h1><hr>
-
+        <!-- Move the welcome message here for responsiveness -->
+        <section id="welcome-message">
+            <hr><h1>Welcome!</h1><hr>
+        </section>
     </header>
 
     <main>
+        
         <section id="content">
-         I'm a physicist passionate about artificial intelligence. <br><br>
-         With a background in physics, I specialize in High Energy Physics, Statistical Data Analysis, and the application of Machine Learning in physics. 
-         I'm also a Classical Piano enthusiast. <br><br>
-         On this site you can find some information on my activities.
+            I'm a physicist passionate about artificial intelligence. <br><br>
+            With a background in physics, I specialize in High Energy Physics, Statistical Data Analysis, and the application of Machine Learning in physics. 
+            I'm also a Classical Piano enthusiast. <br><br>
+            On this site you can find some information on my activities.
         </section>
     </main>
 
@@ -46,24 +60,42 @@
         <img src="images/me.jpg" alt="Image Description">
     </div>
 
-    <!-- <div id="welcome-message">
-        <h1>Welcome to my website!</h1>
-    </div> -->
-      
     <footer>
-        <div class="left-footer">
-            Contact:<br>
-            <a href="mailto:lorenzo.valente3@studio.unibo.it"style="color: #0074d9;">lorenzo.valente3@studio.unibo.it</a>
-        </div>
-        <div class="right-footer">
-            Experimental Particle Physicist - <br> working at DESY (University of Hamburg)
+        <!-- Utilizziamo Bootstrap Grid System -->
+        <div class="container">
+            <div class="row">
+                <!-- Colonna sinistra (GitHub, email, CV) -->
+                <div class="col-md-6">
+                    <p>
+                        <a href="mailto:lorenzo.valente3@studio.unibo.it" target="_blank" style="color: rgb(0, 200, 255);">
+                            <i class="fa fa-envelope fa-1x" style="color: rgb(0, 200, 255);"></i> Email Lorenzo
+                        </a>
+                        <br/>
+                        <a href="https://github.com/LorenzoValente3" target="_blank" style="color: rgb(0, 200, 255);">
+                            <i class="fab fa-github fa-1x" style="color: rgb(0, 200, 255);"></i> GitHub Profile
+                        </a>
+                        <a href="cv/cv.pdf" target="_blank" style="color: rgb(0, 200, 255);"> <br>
+                            <i class="ai ai-cv-square ai-1x" style="color: rgb(0, 200, 255);"></i>
+                        </a> 
+                    </p>
+                </div>
+                <!-- Colonna destra (la tua professione) -->
+                <div class="col-md-6">
+                    <p>
+                        Experimental Particle Physicist - <br> working at DESY (University of Hamburg)
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
     
-    
-    <script src="script.js"></script>
-    <!-- <script src="features/searchbar.js"></script> -->
-    <!-- <script src="effects/stars.js"></script> -->
 
+    
+    <!-- Add Bootstrap JS and jQuery for responsive navigation -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
