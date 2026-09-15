@@ -31,8 +31,9 @@
     <div class="stars"></div>
     <div class="hero-inner">
         <div>
-            <h1>One shower model,<br>many calorimeters</h1>
+            <h1>Lorenzo Valente</h1>
             <div class="tagline">PhD candidate &middot; University of Hamburg</div>
+            <div class="claim">One shower model, many calorimeters</div>
             <p>I work on generative models for the simulation of particle showers in calorimeters. Detailed simulation with Geant4 dominates the computing budget of collider experiments, and learned surrogates have so far been tied to the one detector whose data trained them.</p>
             <p>My thesis makes <strong>one generative shower model reusable across calorimeter geometries</strong>. Pre-trained on several detectors, it adapts to a new one with two orders of magnitude fewer Geant4 showers than a model trained from scratch.</p>
             <div class="hero-links">
@@ -42,6 +43,7 @@
                 <a href="https://huggingface.co/FLC-QU-hep" target="_blank">Hugging Face</a>
                 <a href="https://www.linkedin.com/in/lorenzo-valente-491881201" target="_blank">LinkedIn</a>
                 <a href="mailto:lorenzo.valente@uni-hamburg.de">Email</a>
+                <a href="cv/Lorenzo_Valente_CV.pdf" target="_blank">CV</a>
             </div>
         </div>
         <div class="portrait">
@@ -55,30 +57,45 @@
         <h2>About</h2>
         <p>I am a PhD candidate at the Institute of Experimental Physics of the University of Hamburg, in the group of Gregor Kasieczka. Before Hamburg I studied physics in Bologna, where my master's thesis was on real-time anomaly detection at CMS. I am also a classical pianist.</p>
         <ul class="timeline">
-            <li>
+            <li class="has-logo">
+                <img class="logo" src="images/logos/uhh.svg" alt="">
+                <div class="entry">
                 <div class="when">October 2023 to present</div>
                 <div class="what">PhD in Physics</div>
                 <div class="where">University of Hamburg, Institute of Experimental Physics. Generative models for fast calorimeter simulation, pre-training and transfer across detector geometries. Supervisor: Prof. Gregor Kasieczka.</div>
+            </div>
             </li>
-            <li>
+            <li class="has-logo">
+                <img class="logo" src="images/logos/iac.svg" alt="">
+                <div class="entry">
                 <div class="when">April to July 2023</div>
                 <div class="what">Erasmus internship</div>
                 <div class="where">Instituto de Astrofísica de Canarias (IAC), Tenerife.</div>
+            </div>
             </li>
-            <li>
+            <li class="has-logo">
+                <img class="logo" src="images/logos/unibo.svg" alt="">
+                <div class="entry">
                 <div class="when">September 2020 to March 2023</div>
                 <div class="what">Master's degree in Physics</div>
                 <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/28788/" target="_blank">Variational Autoencoder Application for real-time Anomaly Detection at CMS</a>, supervisor Prof. Daniele Bonacorsi.</div>
+            </div>
             </li>
-            <li>
+            <li class="has-logo">
+                <img class="logo" src="images/logos/lmu.svg" alt="">
+                <div class="entry">
                 <div class="when">April to August 2021</div>
                 <div class="what">Erasmus+</div>
                 <div class="where">Ludwig Maximilian University of Munich.</div>
+            </div>
             </li>
-            <li>
+            <li class="has-logo">
+                <img class="logo" src="images/logos/unibo.svg" alt="">
+                <div class="entry">
                 <div class="when">September 2016 to July 2020</div>
                 <div class="what">Bachelor's degree in Physics</div>
                 <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/21033/1/Lorenzo_Valente_Tesi.pdf" target="_blank">Reconstruction of non-prompt charmed baryon &Lambda;<sub>c</sub> with Boosted Decision Trees</a>.</div>
+            </div>
             </li>
             <li>
                 <div class="when">2009 to 2018</div>
@@ -97,7 +114,7 @@
         <h3>Cross-geometry transfer</h3>
         <p>The first step was to show that a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>).</p>
         <h3>Datasets</h3>
-        <p>The pre-training data are produced with Geant4 and DD4hep for a family of sampling calorimeters, from simulation to training-ready HDF5 (<a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">multi-calorimeter-dataset</a>). Along the way I develop extensions to <a href="https://github.com/fast-sim/ddFastSim" target="_blank">ddFastSim</a>, the DD4hep fast simulation framework.</p>
+        <p>The pre-training data are produced with Geant4 and DD4hep for a family of sampling calorimeters, from simulation to training-ready HDF5 (<a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">multi-calorimeter-dataset</a>). The datasets themselves are on the <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank">University of Hamburg research data repository</a>. Along the way I develop extensions to <a href="https://github.com/fast-sim/ddFastSim" target="_blank">ddFastSim</a>, the DD4hep fast simulation framework.</p>
         <h3>Now</h3>
         <p>A numerical geometry descriptor as conditioning, towards a model that generalises to a new detector without any fine-tuning.</p>
     </div>
@@ -146,6 +163,7 @@
     <div class="wrap">
         <h2>Code and data</h2>
         <div class="repos">
+            <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank"><span class="name">SimpleBox and LEMURS datasets</span><span class="desc">Point cloud shower datasets for multi-geometry pre-training, DOI 10.25592/uhhfdm.19103.</span></a>
             <a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank"><span class="name">multi-calorimeter-dataset</span><span class="desc">Geant4/DD4hep production of the SimpleBox and LEMURS shower datasets.</span></a>
             <a href="https://github.com/FLC-QU-hep/AllShowers/tree/multi-geometry" target="_blank"><span class="name">AllShowers</span><span class="desc">Flow matching transformer for shower point clouds, multi-geometry branch.</span></a>
             <a href="https://github.com/FLC-QU-hep/PointCountFM/tree/multi-geometry" target="_blank"><span class="name">PointCountFM</span><span class="desc">Per-layer point count model, multi-geometry branch.</span></a>
@@ -162,6 +180,7 @@
     <a href="https://github.com/LorenzoValente3" target="_blank">GitHub</a>
     <a href="https://inspirehep.net/authors/3080236" target="_blank">INSPIRE</a>
     <a href="https://orcid.org/0009-0007-0080-8738" target="_blank">ORCID</a>
+    <a href="cv/Lorenzo_Valente_CV.pdf" target="_blank">CV</a>
     <div style="margin-top:0.8rem">Lorenzo Valente &middot; University of Hamburg</div>
 </footer>
 
