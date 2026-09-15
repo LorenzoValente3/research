@@ -196,7 +196,9 @@ section.block:nth-of-type(even) { background: var(--paper-2); }
 .fig { margin: 1.2rem auto 1.8rem; max-width: 720px; }
 .fig img { display: block; width: 100%; height: auto; border: 1px solid #e3e5ec; background: #fff; }
 .fig figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 0.6rem; }
-.fig-small { max-width: 480px; margin: 0.4rem 0 1.6rem; }
+.fig-small { float: right; width: 380px; max-width: 45%; margin: 0.2rem 0 1rem 2rem; }
+.talks { overflow: hidden; }
+#talks .wrap::after { content: ''; display: block; clear: both; }
 .fig-small figcaption { font-style: italic; }
 .talks .links { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.05em; margin-top: 0.15rem; }
 .repos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem; }
@@ -230,6 +232,7 @@ footer {
     .nav-links { justify-content: flex-start; gap: 0.2rem 0.4rem; }
     .nav-links a { padding: 0.25rem 0.5rem; font-size: 0.9rem; }
     .hero-links { gap: 0.5rem; }
+    .fig-small { float: none; width: auto; max-width: 100%; margin: 0.4rem 0 1.4rem; }
     .hero-links a { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
     .hero { min-height: auto; padding: 3rem 1.2rem 3rem; }
     .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
