@@ -223,7 +223,9 @@
         ctx.restore();
     }
 
+    var running = false;
     function frame(ts) {
+        if (!running) return;
         var now = ts / 1000;
         var dt = last ? Math.min(0.05, now - last) : 0.016;
         last = now;
@@ -231,10 +233,21 @@
         draw(now);
         requestAnimationFrame(frame);
     }
+    function run(on) {
+        if (on === running) return;
+        running = on;
+        last = 0;
+        if (on) requestAnimationFrame(frame);
+    }
 
     resize();
     window.addEventListener('resize', resize);
     for (var t = -8; t < 0; t += 1 / 30) step(1 / 30, t);
     draw(0);
-    requestAnimationFrame(frame);
+    // animate only while the hero is on screen (battery on phones)
+    if (window.IntersectionObserver) {
+        new window.IntersectionObserver(function (es) { run(es[0].isIntersecting); }).observe(canvas);
+    } else {
+        run(true);
+    }
 })();
