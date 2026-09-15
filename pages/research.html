@@ -1,34 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-<body style="background-color: white;">
-
-    <!-- Include the navigation bar and footer using JavaScript -->
-    <script src="inclusions.js"></script>
-
-    <header>
-        <hr><h1>Research</h1><hr>
-    </header>
-
-    <main>
-        <section id="research-content">
-            Broadly speaking my work is on Physics ∩ Machine Learning, and more precisely on generative models for the simulation of particle showers in calorimeters. <br><br>
-
-            <strong>One model, many calorimeters.</strong> Detailed simulation with Geant4 dominates the computing budget of collider experiments, and learned surrogates have so far been tied to the one detector whose data trained them. I extend a flow matching transformer for shower point clouds with conditioning on the calorimeter geometry and pre-train it across several detectors. Fine-tuned on a detector it has never seen, it needs two orders of magnitude fewer Geant4 showers to match a model trained from scratch on a full dataset (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>). <br><br>
-
-            <strong>Cross-geometry transfer.</strong> The first step was to show that a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>). <br><br>
-
-            <strong>Datasets and code.</strong> The pre-training data are produced with Geant4 and DD4hep for a family of sampling calorimeters (<a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">multi-calorimeter-dataset</a>). Models and weights are public: <a href="https://github.com/FLC-QU-hep/AllShowers/tree/multi-geometry" target="_blank">AllShowers</a>, <a href="https://github.com/FLC-QU-hep/PointCountFM/tree/multi-geometry" target="_blank">PointCountFM</a>, <a href="https://huggingface.co/FLC-QU-hep" target="_blank">Hugging Face</a>. <br><br>
-
-            Current work: a numerical geometry descriptor as conditioning, towards a model that generalises to a detector without any fine-tuning.
-        </section>
-    </main>
-
-    <script src="script.js"></script>
-</body>
-</html>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=../index.html#research">
+<a href="../index.html#research">Moved</a>

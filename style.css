@@ -1,122 +1,235 @@
+:root {
+    --ink: #0b1020;
+    --ink-2: #141b33;
+    --paper: #f6f5f1;
+    --paper-2: #ffffff;
+    --text: #1c1f2b;
+    --muted: #5b6072;
+    --muted-dark: #a9b0c6;
+    --accent: #2ec4d6;
+    --accent-2: #ffb547;
+    --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--paper);
+    line-height: 1.65;
+    font-size: 17px;
 }
+a { color: inherit; }
+img { max-width: 100%; }
 
-header {
-    text-align: center;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-}
-
-header h1 {
-    margin: 0;
-}
-
-main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 15px;
-}
-
-
-/* Style for the horizontal navigation bar */
-.menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333; /* Background color of the navigation bar */
-}
-
-.menu li {
-    float: left; /* To arrange the elements horizontally */
-}
-
-.menu li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-/* Change the link color on hover */
-.menu li a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Footer style */
-footer {
-    display: flex;
-    justify-content: space-between; /* Spacing between left and right content */
-    align-items: center; /* Center vertically within the footer */
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px; /* Padding inside the footer */
+/* Navigation */
+.nav {
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 2.5rem;
+    background: linear-gradient(to bottom, rgba(11, 16, 32, 0.95), rgba(11, 16, 32, 0.75));
+    backdrop-filter: blur(6px);
+}
+.nav-name { text-decoration: none; display: flex; flex-direction: column; }
+.nav-name .name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #fff;
+}
+.nav-name .sub {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+}
+.nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; }
+.nav-links a {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: #fff;
+    padding: 0.45rem 1.1rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-right: none;
+    transition: background 0.2s;
+}
+.nav-links a:last-child { border-right: 1.5px solid rgba(255, 255, 255, 0.7); }
+.nav-links a:hover { background: rgba(46, 196, 214, 0.25); }
+
+/* Hero */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 20%, var(--ink-2) 0%, var(--ink) 60%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 7rem 2.5rem 4rem;
+}
+.stars {
+    position: absolute; inset: 0;
+    background:
+        radial-gradient(1.5px 1.5px at 12% 22%, #fff, transparent),
+        radial-gradient(1px 1px at 28% 68%, #fff, transparent),
+        radial-gradient(2px 2px at 41% 35%, #fff, transparent),
+        radial-gradient(1px 1px at 55% 80%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 63% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 74% 52%, #fff, transparent),
+        radial-gradient(2px 2px at 86% 28%, #fff, transparent),
+        radial-gradient(1px 1px at 92% 74%, #fff, transparent),
+        radial-gradient(1px 1px at 8% 88%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 47% 58%, #fff, transparent);
+    animation: twinkle 7s ease-in-out infinite;
+    opacity: 0.6;
+}
+@keyframes twinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.75; } }
+.hero-inner {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3.5rem;
+    align-items: center;
+    animation: rise 0.9s ease-out;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.6rem;
+    background: linear-gradient(120deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero .tagline {
+    font-family: var(--font-display);
+    color: var(--accent-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    margin-bottom: 1.6rem;
+}
+.hero p { color: #dfe3f0; max-width: 60ch; margin-bottom: 1rem; }
+.hero p strong { color: #fff; }
+.hero-links { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hero-links a {
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: #fff;
+    border: 1.5px solid var(--accent);
+    padding: 0.4rem 0.9rem;
+    transition: background 0.2s;
+}
+.hero-links a:hover { background: rgba(46, 196, 214, 0.25); }
+.portrait img {
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
 }
 
-/* Style for the left side of the footer */
-.left-footer {
-    text-align: left; /* Align text to the left */
+/* Sections */
+section.block { padding: 5rem 2.5rem; }
+section.block:nth-of-type(even) { background: var(--paper-2); }
+.wrap { max-width: 900px; margin: 0 auto; }
+.block h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.8rem;
+    position: relative;
+    padding-left: 1rem;
 }
-
-/* Style for the right side of the footer */
-.right-footer {
-    text-align: right; /* Align text to the right */
+.block h2::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.35em; bottom: 0.25em;
+    width: 4px;
+    background: var(--accent);
 }
+.block h3 { font-family: var(--font-display); font-size: 1.15rem; margin: 1.6rem 0 0.4rem; }
+.block p { margin-bottom: 1rem; }
+.block a { color: #0e7c8b; text-decoration: none; border-bottom: 1px solid rgba(14, 124, 139, 0.35); }
+.block a:hover { border-bottom-color: #0e7c8b; }
 
-
-/* Style for the main content */
-#content {
-    display: flex; /* Use flexbox to create a flexible layout */
-    align-items: center; /* Vertically align text and image */
-    margin-bottom: 20px;
+/* Timeline (biography) */
+.timeline { list-style: none; border-left: 2px solid #d8dbe6; margin-left: 0.4rem; }
+.timeline li { position: relative; padding: 0 0 1.6rem 1.6rem; }
+.timeline li::before {
+    content: '';
+    position: absolute;
+    left: -7px; top: 0.45rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--paper);
 }
-
-/* Style for the text content */
-.content-text {
-    flex: 1; /* Text occupies remaining space */
-    padding: 40px; /* Add padding to separate text from the image */
-    margin-bottom: 40px;
+.timeline .when {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
 }
-/* Style for the image */
-.content-image img {
-    max-width: 65%; /* Prevent the image from exceeding container width */
-    height: auto; /* Maintain image proportions */
-    display: block; /* Imposta l'immagine come elemento "block" per utilizzare il margin auto */
-    margin: 0 auto 10px; /* Centra l'immagine orizzontalmente */
-    margin-bottom: 150px;
-}
+.timeline .what { font-weight: 600; }
+.timeline .where { color: var(--muted); }
 
-.content-image {
-    margin-bottom: 20px; /* Aggiunge un margine inferiore di 20px */
+/* Lists of papers and talks */
+.pubs, .talks { list-style: none; }
+.pubs li, .talks li { padding: 0.9rem 0; border-bottom: 1px solid #e3e5ec; }
+.pubs li:last-child, .talks li:last-child { border-bottom: none; }
+.pubs .title { font-weight: 600; }
+.pubs .venue, .talks .venue { color: var(--muted); font-size: 0.95rem; }
+.repos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.repos a {
+    display: block;
+    padding: 1rem 1.1rem;
+    border: 1px solid #dfe2ea;
+    border-radius: 6px;
+    background: var(--paper-2);
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid #dfe2ea;
+    transition: border-color 0.2s, transform 0.2s;
 }
+.repos a:hover { border-color: var(--accent); transform: translateY(-2px); }
+.repos .name { font-family: var(--font-display); font-weight: 600; display: block; margin-bottom: 0.2rem; }
+.repos .desc { font-size: 0.92rem; color: var(--muted); }
 
-/* Style for the welcome message */
-#welcome-message {
+/* Footer */
+footer {
+    background: var(--ink);
+    color: var(--muted-dark);
+    padding: 2.5rem;
     text-align: center;
-    background-color: #5e5e5e; /* Background color */
-    color: whitesmoke; /* Text color */
-    font-size: 14px; /* Font size */
-    font-weight: bold; /* Font weight */
+    font-size: 0.92rem;
+}
+footer a { color: #fff; text-decoration: none; margin: 0 0.6rem; }
+footer a:hover { color: var(--accent); }
+
+@media (max-width: 800px) {
+    .nav { padding: 0.9rem 1.2rem; flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+    .nav-links a { padding: 0.35rem 0.7rem; font-size: 0.85rem; }
+    .hero { padding: 9rem 1.2rem 3rem; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .portrait { max-width: 260px; }
+    section.block { padding: 3.5rem 1.2rem; }
 }

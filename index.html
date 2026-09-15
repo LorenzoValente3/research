@@ -3,116 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type ="image/x-icon" href="images/me_cv.png">
-
-
+    <title>Lorenzo Valente</title>
+    <meta name="description" content="Lorenzo Valente, PhD candidate at the University of Hamburg. Generative models for fast calorimeter simulation, pre-training and transfer across detector geometries.">
+    <link rel="shortcut icon" type="image/x-icon" href="images/me_cv.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <!-- Add Bootstrap CSS for responsive navigation -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
-    <!-- Begin Jekyll SEO tag v2.8.0 -->
-    <title> Home - Lorenzo Valente</title>
-    <meta name="generator" content="Jekyll v4.3.1" />
-    <meta property="og:title" content="Home" />
-    <meta property="og:locale" content="en_US" />
-    <meta name="description" content="Lorenzo Valente research website" />
-    <meta property="og:description" content="Lorenzo Valente research website" />
-    <link rel="canonical" href="/" />
-    <meta property="og:url" content="/" />
-    <meta property="og:site_name" content="Lorenzo Valente | research" />
-    <meta property="og:type" content="website" />
-    <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"WebSite","description":"Lorenzo Valente research website","headline":"Home","name":"Lorenzo Valente | research","url":"/"}</script>
-    <!-- End Jekyll SEO tag -->
-
 </head>
-<body style="background-color: white;">
+<body>
 
-    <!-- Navigation bar using Bootstrap -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Lorenzo Valente</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/biography.html">Biography</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/research.html">Research</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/publications.html">Publications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages/talks.html">Talks</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <header>
-        <!-- Move the welcome message here for responsiveness -->
-        <section id="welcome-message">
-            <hr><h1>Welcome!</h1><hr>
-        </section>
-    </header>
-
-    <main>
-        
-        <section id="content">
-            I am a PhD candidate at the University of Hamburg, working on generative models for fast calorimeter simulation. My thesis makes one generative shower model reusable across calorimeter geometries: pre-trained on several detectors, it adapts to a new one with two orders of magnitude fewer Geant4 showers than a model trained from scratch. <br><br>
-            Before Hamburg I studied physics in Bologna, where my master's thesis was on real-time anomaly detection at CMS. I am also a classical pianist. <br><br>
-            <a href="https://inspirehep.net/authors/3080236" target="_blank">INSPIRE</a> &middot;
-            <a href="https://orcid.org/0009-0007-0080-8738" target="_blank">ORCID</a> &middot;
-            <a href="https://huggingface.co/FLC-QU-hep" target="_blank">Hugging Face</a> &middot;
-            <a href="https://www.linkedin.com/in/lorenzo-valente-491881201" target="_blank">LinkedIn</a>
-        </section>
-    </main>
-
-    <div class="content-image">
-        <!-- Image -->
-        <img src="images/me.jpg" alt="Image Description">
+<nav class="nav">
+    <a class="nav-name" href="#top">
+        <span class="name">Lorenzo Valente</span>
+        <span class="sub">Particle physics &#9670; Machine learning</span>
+    </a>
+    <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#talks">Talks</a>
+        <a href="#code">Code</a>
     </div>
+</nav>
 
-    <footer>
-        <!-- Utilizziamo Bootstrap Grid System -->
-        <div class="container">
-            <div class="row">
-                <!-- Colonna sinistra (GitHub, email, CV) -->
-                <div class="col-md-6 text-md-left">
-                    <p>
-                        <a href="mailto:lorenzo.valente@uni-hamburg.de" target="_blank" style="color:cyan;">
-                            <i class="fa fa-envelope fa-1x" style="color:cyan;"></i> Email Lorenzo
-                        </a>
-                        <br/>
-                        <a href="https://github.com/LorenzoValente3" target="_blank" style="color:cyan;">
-                            <i class="fab fa-github fa-1x" style="color:cyan;"></i> GitHub Profile
-                        </a>
-                    </p>
-                </div>
-                <!-- Colonna destra (la tua professione) -->
-                <div class="col-md-6 text-md-right">
-                    <p>
-                        PhD candidate in experimental particle physics <br> University of Hamburg
-                    </p>
-                </div>
+<header class="hero" id="top">
+    <div class="stars"></div>
+    <div class="hero-inner">
+        <div>
+            <h1>One shower model,<br>many calorimeters</h1>
+            <div class="tagline">PhD candidate &middot; University of Hamburg</div>
+            <p>I work on generative models for the simulation of particle showers in calorimeters. Detailed simulation with Geant4 dominates the computing budget of collider experiments, and learned surrogates have so far been tied to the one detector whose data trained them.</p>
+            <p>My thesis makes <strong>one generative shower model reusable across calorimeter geometries</strong>. Pre-trained on several detectors, it adapts to a new one with two orders of magnitude fewer Geant4 showers than a model trained from scratch.</p>
+            <div class="hero-links">
+                <a href="https://inspirehep.net/authors/3080236" target="_blank">INSPIRE</a>
+                <a href="https://orcid.org/0009-0007-0080-8738" target="_blank">ORCID</a>
+                <a href="https://github.com/LorenzoValente3" target="_blank">GitHub</a>
+                <a href="https://huggingface.co/FLC-QU-hep" target="_blank">Hugging Face</a>
+                <a href="https://www.linkedin.com/in/lorenzo-valente-491881201" target="_blank">LinkedIn</a>
+                <a href="mailto:lorenzo.valente@uni-hamburg.de">Email</a>
             </div>
         </div>
-    </footer>
-    
+        <div class="portrait">
+            <img src="images/me_hero.jpg" alt="Lorenzo Valente">
+        </div>
+    </div>
+</header>
 
-    
-    <!-- Add Bootstrap JS and jQuery for responsive navigation -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<section class="block" id="about">
+    <div class="wrap">
+        <h2>About</h2>
+        <p>I am a PhD candidate at the Institute of Experimental Physics of the University of Hamburg, in the group of Gregor Kasieczka. Before Hamburg I studied physics in Bologna, where my master's thesis was on real-time anomaly detection at CMS. I am also a classical pianist.</p>
+        <ul class="timeline">
+            <li>
+                <div class="when">October 2023 to present</div>
+                <div class="what">PhD in Physics</div>
+                <div class="where">University of Hamburg, Institute of Experimental Physics. Generative models for fast calorimeter simulation, pre-training and transfer across detector geometries. Supervisor: Prof. Gregor Kasieczka.</div>
+            </li>
+            <li>
+                <div class="when">April to July 2023</div>
+                <div class="what">Erasmus internship</div>
+                <div class="where">Instituto de Astrofísica de Canarias (IAC), Tenerife.</div>
+            </li>
+            <li>
+                <div class="when">September 2020 to March 2023</div>
+                <div class="what">Master's degree in Physics</div>
+                <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/28788/" target="_blank">Variational Autoencoder Application for real-time Anomaly Detection at CMS</a>, supervisor Prof. Daniele Bonacorsi.</div>
+            </li>
+            <li>
+                <div class="when">April to August 2021</div>
+                <div class="what">Erasmus+</div>
+                <div class="where">Ludwig Maximilian University of Munich.</div>
+            </li>
+            <li>
+                <div class="when">September 2016 to July 2020</div>
+                <div class="what">Bachelor's degree in Physics</div>
+                <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/21033/1/Lorenzo_Valente_Tesi.pdf" target="_blank">Reconstruction of non-prompt charmed baryon &Lambda;<sub>c</sub> with Boosted Decision Trees</a>.</div>
+            </li>
+            <li>
+                <div class="when">2009 to 2018</div>
+                <div class="what">Master's degree in Classical Piano</div>
+                <div class="where">Conservatory of Music, Pescara.</div>
+            </li>
+        </ul>
+    </div>
+</section>
 
-    <script src="script.js"></script>
+<section class="block" id="research">
+    <div class="wrap">
+        <h2>Research</h2>
+        <h3>Multi-geometry pre-training</h3>
+        <p>I extend a flow matching transformer for shower point clouds with conditioning on the calorimeter geometry and pre-train it across several detectors. Fine-tuned on a detector it has never seen, it needs two orders of magnitude fewer Geant4 showers to match a model trained from scratch on a full dataset (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</p>
+        <h3>Cross-geometry transfer</h3>
+        <p>The first step was to show that a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>).</p>
+        <h3>Datasets</h3>
+        <p>The pre-training data are produced with Geant4 and DD4hep for a family of sampling calorimeters, from simulation to training-ready HDF5 (<a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">multi-calorimeter-dataset</a>). Along the way I develop extensions to <a href="https://github.com/fast-sim/ddFastSim" target="_blank">ddFastSim</a>, the DD4hep fast simulation framework.</p>
+        <h3>Now</h3>
+        <p>A numerical geometry descriptor as conditioning, towards a model that generalises to a new detector without any fine-tuning.</p>
+    </div>
+</section>
+
+<section class="block" id="publications">
+    <div class="wrap">
+        <h2>Publications</h2>
+        <ul class="pubs">
+            <li>
+                <div class="title">Transferable Fast Calorimeter Shower Generation via Multi-Geometry Pre-training</div>
+                <div class="venue">T. Buss, F. Gaede, G. Kasieczka, L. Valente. <a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a> (2026), submitted to JINST.</div>
+            </li>
+            <li>
+                <div class="title">Cross-Geometry Transfer Learning in Fast Electromagnetic Shower Simulation</div>
+                <div class="venue">F. Gaede, G. Kasieczka, L. Valente. <a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>.</div>
+            </li>
+            <li>
+                <div class="title">CaloClouds3: Ultra-fast Geometry-Independent Highly-Granular Calorimeter Simulation</div>
+                <div class="venue">H. Day-Hall et al. <a href="https://doi.org/10.1088/1748-0221/21/03/P03018" target="_blank">JINST 21 (2026) P03018</a>.</div>
+            </li>
+            <li>
+                <div class="title">Joint Variational Auto-Encoder for Anomaly Detection in High Energy Physics</div>
+                <div class="venue">L. Valente et al. <a href="https://doi.org/10.22323/1.434.0014" target="_blank">PoS ISGC&amp;HEPiX2023 (2023) 014</a>.</div>
+            </li>
+        </ul>
+        <p style="margin-top:1rem">Full list on <a href="https://inspirehep.net/authors/3080236" target="_blank">INSPIRE</a>.</p>
+    </div>
+</section>
+
+<section class="block" id="talks">
+    <div class="wrap">
+        <h2>Talks</h2>
+        <ul class="talks">
+            <li><a href="https://indico.physi.uni-heidelberg.de/event/1277/contributions/4147/" target="_blank">Cross-Geometry Shower Simulation via Pre-training and Transfer</a><div class="venue">EuCAIFCon 2026, Heidelberg, August 2026</div></li>
+            <li><a href="https://indico.cern.ch/event/1537360/contributions/7068481/" target="_blank">ML and Detector Simulation</a> (invited)<div class="venue">LHCP 2026, Paris, May 2026</div></li>
+            <li><a href="https://indico.cern.ch/event/1488410/contributions/6562826/" target="_blank">Cross-Geometry Fast Electromagnetic Shower Simulation</a><div class="venue">ACAT 2025, Hamburg, September 2025</div></li>
+            <li><a href="https://indico.cern.ch/event/1502120/contributions/6505989/" target="_blank">Cross-Geometry Fast Electromagnetic Shower Simulation</a><div class="venue">7th Inter-Experimental LHC Machine Learning Workshop, CERN, May 2025</div></li>
+            <li>Adaptive Generative Modeling for Accelerated Calorimeter Simulations via Domain Transfer<div class="venue">DPG Spring Meeting, Göttingen, April 2025</div></li>
+            <li><a href="https://agenda.infn.it/event/36725/" target="_blank">Machine Learning Knowledge Base</a><div class="venue">ML-INFN, July 2023</div></li>
+        </ul>
+    </div>
+</section>
+
+<section class="block" id="code">
+    <div class="wrap">
+        <h2>Code and data</h2>
+        <div class="repos">
+            <a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank"><span class="name">multi-calorimeter-dataset</span><span class="desc">Geant4/DD4hep production of the SimpleBox and LEMURS shower datasets.</span></a>
+            <a href="https://github.com/FLC-QU-hep/AllShowers/tree/multi-geometry" target="_blank"><span class="name">AllShowers</span><span class="desc">Flow matching transformer for shower point clouds, multi-geometry branch.</span></a>
+            <a href="https://github.com/FLC-QU-hep/PointCountFM/tree/multi-geometry" target="_blank"><span class="name">PointCountFM</span><span class="desc">Per-layer point count model, multi-geometry branch.</span></a>
+            <a href="https://huggingface.co/FLC-QU-hep" target="_blank"><span class="name">Weights on Hugging Face</span><span class="desc">Pre-trained models of the multi-geometry paper.</span></a>
+            <a href="https://github.com/FLC-QU-hep/CaloTransfer" target="_blank"><span class="name">CaloTransfer</span><span class="desc">Code of the JINST cross-geometry transfer paper.</span></a>
+            <a href="https://github.com/LorenzoValente3/JointVAE4AD" target="_blank"><span class="name">JointVAE4AD</span><span class="desc">Joint continuous and discrete VAE for anomaly detection.</span></a>
+            <a href="https://github.com/LorenzoValente3/Autoencoder-for-FPGA" target="_blank"><span class="name">Autoencoder-for-FPGA</span><span class="desc">Quantization-aware autoencoder deployed with hls4ml.</span></a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <a href="mailto:lorenzo.valente@uni-hamburg.de">lorenzo.valente@uni-hamburg.de</a>
+    <a href="https://github.com/LorenzoValente3" target="_blank">GitHub</a>
+    <a href="https://inspirehep.net/authors/3080236" target="_blank">INSPIRE</a>
+    <a href="https://orcid.org/0009-0007-0080-8738" target="_blank">ORCID</a>
+    <div style="margin-top:0.8rem">Lorenzo Valente &middot; University of Hamburg</div>
+</footer>
+
 </body>
 </html>
