@@ -23,7 +23,7 @@
     var dots = [], tracks = [], segs = [];
     var LITE = window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
     var LIFE = 7, SPEED = 170, MAX_DOTS = LITE ? 1500 : 5000, MAX_TRACKS = LITE ? 150 : 400;
-    var E_MAX_DEC = LITE ? 2 : 3, GAP = LITE ? 1.5 : 1.0, PREROLL = LITE ? 4 : 8;
+    var E_MAX_DEC = LITE ? 2 : 3, GAP = LITE ? 1.5 : 1.0, PREROLL = LITE ? 0 : 8;
     var E_CRIT = 0.01, STEP = 7;
     var COLOR = { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
@@ -247,14 +247,18 @@
         if (on) requestAnimationFrame(frame);
     }
 
-    resize();
-    window.addEventListener('resize', resize);
-    for (var t = -PREROLL; t < 0; t += 1 / 30) step(1 / 30, t);
-    draw(0);
-    // animate only while the hero is on screen (battery on phones)
-    if (window.IntersectionObserver) {
-        new window.IntersectionObserver(function (es) { run(es[0].isIntersecting); }).observe(canvas);
-    } else {
-        run(true);
+    function init() {
+        resize();
+        window.addEventListener('resize', resize);
+        for (var t = -PREROLL; t < 0; t += 1 / 30) step(1 / 30, t);
+        draw(0);
+        // animate only while the hero is on screen (battery on phones)
+        if (window.IntersectionObserver) {
+            new window.IntersectionObserver(function (es) { run(es[0].isIntersecting); }).observe(canvas);
+        } else {
+            run(true);
+        }
     }
+    // phones: let the page paint first, start the cascade afterwards
+    if (LITE) setTimeout(init, 300); else init();
 })();
