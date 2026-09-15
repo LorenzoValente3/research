@@ -1,18 +1,22 @@
-// Electromagnetic showers behind the hero text, drawn as point clouds.
-// Heitler cascade: a particle enters from the top, travels one radiation
-// length, splits into two with half the energy each and a small angular kick,
-// and so on until the energy falls below a critical value. The longitudinal
-// profile and the lateral spread follow from the splitting alone.
-// Off when the visitor asks for reduced motion.
+// Particles crossing a calorimeter, drawn behind the hero text.
+// Kinds: e (electron or positron), g (photon), h (charged hadron: pion, kaon,
+// proton), n (neutron or neutral kaon), mu (muon), nu (neutrino).
+// Electrons and photons cascade Heitler-style (split after one radiation
+// length, energy halves, small angular kick). Hadrons ionise minimally until
+// one interaction length, then break into a few wide-angle secondaries, some
+// of them neutral pions that show up as photons. Muons ionise minimally and
+// leave. Neutrinos and neutrons deposit nothing. Off with reduced motion.
 (function () {
     var canvas = document.querySelector('.shower');
     if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var ctx = canvas.getContext('2d');
     var W = 0, H = 0, last = 0, nextShower = -1e9;
     var dots = [], tracks = [], segs = [];
-    var LIFE = 6, SPEED = 170, MAX_DOTS = 4000, MAX_TRACKS = 96;
-    var E_CRIT = 1 / 32, DEPOSIT_STEP = 7;
-    var COLORS = ['46,196,214', '46,196,214', '255,181,71', '255,255,255'];
+    var LIFE = 7, SPEED = 170, MAX_DOTS = 4000, MAX_TRACKS = 120;
+    var E_CRIT = 1 / 32, STEP = 7;
+    var COLOR = { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
+    var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
+    var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
 
     function resize() {
         W = canvas.width = canvas.clientWidth;
@@ -22,80 +26,107 @@
         var u = 1 - Math.random(), v = Math.random();
         return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
     }
+    function pickKind() {
+        var r = Math.random();
+        for (var i = 0; i < MIX.length; i++) { r -= MIX[i][1]; if (r <= 0) return MIX[i][0]; }
+        return 'e';
+    }
     function radLength() { return H * (0.06 + 0.04 * Math.random()); }
+    function intLength() { return H * (0.16 + 0.14 * Math.random()); }
+    function pathLength(kind) {
+        if (kind === 'e') return radLength();
+        if (kind === 'g') return radLength() * 9 / 7;
+        if (kind === 'h' || kind === 'n') return intLength();
+        return 1e9;
+    }
+    function track(kind, x, y, a, e) {
+        return { k: kind, x: x, y: y, a: a, e: e, left: pathLength(kind), since: 0, lx: x, ly: y };
+    }
+    function spawn() {
+        var kind = pickKind();
+        tracks.push(track(kind, W * (0.05 + 0.9 * Math.random()), -10, (Math.random() - 0.5) * 0.5, 1));
+    }
+    function deposits(kind) { return kind === 'e' || kind === 'h' || kind === 'mu'; }
 
-    function spawnShower(now) {
-        tracks.push({
-            x: W * (0.05 + 0.9 * Math.random()), y: -10,
-            a: (Math.random() - 0.5) * 0.4,
-            e: 1, left: radLength() * (0.6 + 0.8 * Math.random()),
-            since: 0, lx: 0, ly: 0
-        });
+    function split(p, now, born) {
+        var out = [];
+        if (p.k === 'e') {
+            // bremsstrahlung: electron keeps half, photon takes half
+            var kick = 0.12 + 0.18 * Math.sqrt(1 / (p.e * 32));
+            out.push(track('e', p.x, p.y, p.a - kick * (0.4 + Math.random()), p.e / 2));
+            out.push(track('g', p.x, p.y, p.a + kick * (0.4 + Math.random()), p.e / 2));
+        } else if (p.k === 'g') {
+            // pair production
+            var k2 = 0.12 + 0.18 * Math.sqrt(1 / (p.e * 32));
+            out.push(track('e', p.x, p.y, p.a - k2 * (0.4 + Math.random()), p.e / 2));
+            out.push(track('e', p.x, p.y, p.a + k2 * (0.4 + Math.random()), p.e / 2));
+        } else {
+            // hadronic interaction: a few secondaries, wide angles
+            var n = 2 + Math.floor(Math.random() * 3), w = [], sum = 0, i;
+            for (i = 0; i < n; i++) { w.push(0.2 + Math.random()); sum += w[i]; }
+            for (i = 0; i < n; i++) {
+                var r = Math.random(), kind = r < 0.5 ? 'h' : (r < 0.85 ? 'g' : 'n');
+                var ang = p.a + (Math.random() < 0.5 ? -1 : 1) * (0.2 + 0.5 * Math.random());
+                out.push(track(kind, p.x, p.y, ang, p.e * w[i] / sum));
+            }
+        }
+        for (var j = 0; j < out.length; j++) {
+            if (out[j].e >= E_CRIT && tracks.length + born.length < MAX_TRACKS) born.push(out[j]);
+        }
     }
 
     function step(dt, now) {
         if (now > nextShower) {
-            spawnShower(now);
-            nextShower = now + 1.4 + 1.2 * Math.random();
+            spawn();
+            nextShower = now + 0.9 + 1.0 * Math.random();
         }
         var born = [];
         for (var i = tracks.length - 1; i >= 0; i--) {
             var p = tracks[i];
-            if (p.lx === 0 && p.ly === 0) { p.lx = p.x; p.ly = p.y; }
             var d = SPEED * dt;
             p.x += Math.sin(p.a) * d;
             p.y += Math.cos(p.a) * d;
             p.left -= d;
             p.since += d;
-            if (p.since >= DEPOSIT_STEP && dots.length < MAX_DOTS) {
+            var stepLen = p.k === 'mu' ? STEP * 2 : STEP;
+            if (p.since >= stepLen) {
                 p.since = 0;
-                segs.push({ x1: p.lx, y1: p.ly, x2: p.x, y2: p.y, e: p.e, born: now });
+                segs.push({ k: p.k, x1: p.lx, y1: p.ly, x2: p.x, y2: p.y, e: p.e, born: now });
                 p.lx = p.x; p.ly = p.y;
-                dots.push({
-                    x: p.x + randn() * 1.2, y: p.y + randn() * 1.2,
-                    r: 0.7 + 2.2 * Math.sqrt(p.e), born: now,
-                    c: COLORS[Math.floor(Math.random() * COLORS.length)]
-                });
-            }
-            if (p.y > H + 10 || p.x < -20 || p.x > W + 20) { tracks.splice(i, 1); continue; }
-            if (p.left <= 0) {
-                tracks.splice(i, 1);
-                if (p.e / 2 < E_CRIT) continue;
-                // multiple scattering grows as the energy drops
-                var kick = 0.12 + 0.18 * Math.sqrt(1 / (p.e * 32));
-                for (var k = 0; k < 2 && tracks.length + born.length < MAX_TRACKS; k++) {
-                    born.push({
-                        x: p.x, y: p.y,
-                        a: p.a + (k ? 1 : -1) * kick * (0.4 + Math.random()),
-                        e: p.e / 2, left: radLength(), since: 0, lx: p.x, ly: p.y
+                if (deposits(p.k) && dots.length < MAX_DOTS) {
+                    var mip = p.k === 'mu' || (p.k === 'h' && p.left > 0);
+                    dots.push({
+                        x: p.x + randn() * 1.2, y: p.y + randn() * 1.2,
+                        r: mip ? 1.0 : 0.6 + 2.0 * Math.sqrt(p.e), born: now, c: COLOR[p.k]
                     });
                 }
             }
+            if (p.y > H + 10 || p.x < -20 || p.x > W + 20) { tracks.splice(i, 1); continue; }
+            if (p.left <= 0) { tracks.splice(i, 1); split(p, now, born); }
         }
         tracks = tracks.concat(born);
-        for (var j = dots.length - 1; j >= 0; j--) {
-            if (now - dots[j].born > LIFE) dots.splice(j, 1);
-        }
-        for (var m = segs.length - 1; m >= 0; m--) {
-            if (now - segs[m].born > LIFE) segs.splice(m, 1);
-        }
+        for (var j = dots.length - 1; j >= 0; j--) if (now - dots[j].born > LIFE) dots.splice(j, 1);
+        for (var m = segs.length - 1; m >= 0; m--) if (now - segs[m].born > LIFE) segs.splice(m, 1);
     }
 
     function draw(now) {
         ctx.clearRect(0, 0, W, H);
         for (var k = 0; k < segs.length; k++) {
             var g = segs[k];
-            var la = 0.45 * (1 - (now - g.born) / LIFE);
+            var base = (g.k === 'nu' || g.k === 'n') ? 0.12 : (g.k === 'g' ? 0.18 : 0.28);
+            var la = base * (1 - (now - g.born) / LIFE);
             ctx.beginPath();
+            ctx.setLineDash(DASH[g.k] || []);
             ctx.moveTo(g.x1, g.y1);
             ctx.lineTo(g.x2, g.y2);
-            ctx.lineWidth = 0.5 + 1.2 * Math.sqrt(g.e);
-            ctx.strokeStyle = 'rgba(255,255,255,' + la.toFixed(3) + ')';
+            ctx.lineWidth = 0.4 + 1.0 * Math.sqrt(g.e);
+            ctx.strokeStyle = 'rgba(' + COLOR[g.k] + ',' + la.toFixed(3) + ')';
             ctx.stroke();
         }
+        ctx.setLineDash([]);
         for (var i = 0; i < dots.length; i++) {
             var d = dots[i];
-            var a = 0.85 * (1 - (now - d.born) / LIFE);
+            var a = 0.5 * (1 - (now - d.born) / LIFE);
             ctx.beginPath();
             ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
             ctx.fillStyle = 'rgba(' + d.c + ',' + a.toFixed(3) + ')';
@@ -114,7 +145,7 @@
 
     resize();
     window.addEventListener('resize', resize);
-    for (var t = -7; t < 0; t += 1 / 30) step(1 / 30, t);
+    for (var t = -8; t < 0; t += 1 / 30) step(1 / 30, t);
     draw(0);
     requestAnimationFrame(frame);
 })();
