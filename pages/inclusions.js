@@ -27,7 +27,7 @@ function includeInclusions() {
     <!-- <div class="panel-footer"> -->
         <div class="left-footer">
                 <p>
-                    <a href="mailto:lorenzo.valente3@studio.unibo.it" target="_blank" style="color: rgb(0, 200, 255);">
+                    <a href="mailto:lorenzo.valente@uni-hamburg.de" target="_blank" style="color: rgb(0, 200, 255);">
                         <i class="fa fa-envelope fa-1x" style="color: rgb(0, 200, 255);"></i> Email Lorenzo
                     </a>
                     <br/>
@@ -37,7 +37,7 @@ function includeInclusions() {
                 </p>
             </div>
             <div class="right-footer">
-                Experimental Particle Physicist - <br> working at DESY (University of Hamburg)
+                PhD candidate in experimental particle physics <br> University of Hamburg
             </div>
             
                 
@@ -49,7 +49,7 @@ function includeInclusions() {
     // // Create a right footer section
     // const rightFooter = document.createElement('div');
     // rightFooter.classList.add('right-footer');
-    // rightFooter.innerHTML = 'Experimental Particle Physicist - <br> working at DESY (University of Hamburg)';
+    // rightFooter.innerHTML = 'PhD candidate in experimental particle physics <br> University of Hamburg';
 
     // Append the left and right footer sections to the footer element
     footer.appendChild(leftFooter);
