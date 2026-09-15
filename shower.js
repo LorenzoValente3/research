@@ -18,9 +18,16 @@
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
     var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
 
+    var text = document.querySelector('.hero-text'), hole = null;
     function resize() {
         W = canvas.width = canvas.clientWidth;
         H = canvas.height = canvas.clientHeight;
+        // particles are drawn dimmer behind the text block
+        hole = null;
+        if (text) {
+            var c = canvas.getBoundingClientRect(), r = text.getBoundingClientRect();
+            hole = { x: r.left - c.left - 16, y: r.top - c.top - 12, w: r.width + 32, h: r.height + 24 };
+        }
     }
     function randn() {
         var u = 1 - Math.random(), v = Math.random();
@@ -109,12 +116,11 @@
         for (var m = segs.length - 1; m >= 0; m--) if (now - segs[m].born > LIFE) segs.splice(m, 1);
     }
 
-    function draw(now) {
-        ctx.clearRect(0, 0, W, H);
+    function paint(now, gain) {
         for (var k = 0; k < segs.length; k++) {
             var g = segs[k];
-            var base = (g.k === 'nu' || g.k === 'n') ? 0.1 : (g.k === 'g' ? 0.14 : 0.22);
-            var la = base * (1 - (now - g.born) / LIFE);
+            var base = (g.k === 'nu' || g.k === 'n') ? 0.16 : (g.k === 'g' ? 0.24 : 0.38);
+            var la = gain * base * (1 - (now - g.born) / LIFE);
             ctx.beginPath();
             ctx.setLineDash(DASH[g.k] || []);
             ctx.moveTo(g.x1, g.y1);
@@ -126,12 +132,30 @@
         ctx.setLineDash([]);
         for (var i = 0; i < dots.length; i++) {
             var d = dots[i];
-            var a = 0.4 * (1 - (now - d.born) / LIFE);
+            var a = gain * 0.7 * (1 - (now - d.born) / LIFE);
             ctx.beginPath();
             ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
             ctx.fillStyle = 'rgba(' + d.c + ',' + a.toFixed(3) + ')';
             ctx.fill();
         }
+    }
+
+    function draw(now) {
+        ctx.clearRect(0, 0, W, H);
+        if (!hole) { paint(now, 1); return; }
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, W, H);
+        ctx.rect(hole.x, hole.y, hole.w, hole.h);
+        ctx.clip('evenodd');
+        paint(now, 1);
+        ctx.restore();
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(hole.x, hole.y, hole.w, hole.h);
+        ctx.clip();
+        paint(now, 0.45);
+        ctx.restore();
     }
 
     function frame(ts) {
