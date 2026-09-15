@@ -13,14 +13,17 @@
 // longitudinal profile, a Moliere-like lateral spread, a length growing with
 // log(E) and a number of deposits growing with E. Deposits fluctuate
 // Landau-like. Muons ionise minimally and leave. Neutrinos and neutrons
-// deposit nothing. Off with reduced motion.
+// deposit nothing. Off with reduced motion. Phones (narrow or touch) get a
+// lighter budget: 1 to 100 GeV, fewer deposits and tracks, sparser showers.
 (function () {
     var canvas = document.querySelector('.shower');
     if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var ctx = canvas.getContext('2d');
     var W = 0, H = 0, last = 0, nextShower = -1e9;
     var dots = [], tracks = [], segs = [];
-    var LIFE = 7, SPEED = 170, MAX_DOTS = 5000, MAX_TRACKS = 400;
+    var LITE = window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
+    var LIFE = 7, SPEED = 170, MAX_DOTS = LITE ? 1500 : 5000, MAX_TRACKS = LITE ? 150 : 400;
+    var E_MAX_DEC = LITE ? 2 : 3, GAP = LITE ? 1.5 : 1.0, PREROLL = LITE ? 4 : 8;
     var E_CRIT = 0.01, STEP = 7;
     var COLOR = { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
@@ -80,7 +83,7 @@
     }
     function spawn() {
         var kind = pickKind();
-        var e = Math.pow(10, 3 * Math.random());
+        var e = Math.pow(10, E_MAX_DEC * Math.random());
         var t = track(kind, W * (0.05 + 0.9 * Math.random()), -10, (Math.random() - 0.5) * 0.5, e);
         t.e0 = e;
         tracks.push(t);
@@ -127,7 +130,7 @@
     function step(dt, now) {
         if (now > nextShower) {
             spawn();
-            nextShower = now + 1.0 + 1.0 * Math.random();
+            nextShower = now + GAP * (1 + Math.random());
         }
         var born = [];
         for (var i = tracks.length - 1; i >= 0; i--) {
@@ -242,7 +245,7 @@
 
     resize();
     window.addEventListener('resize', resize);
-    for (var t = -8; t < 0; t += 1 / 30) step(1 / 30, t);
+    for (var t = -PREROLL; t < 0; t += 1 / 30) step(1 / 30, t);
     draw(0);
     // animate only while the hero is on screen (battery on phones)
     if (window.IntersectionObserver) {
