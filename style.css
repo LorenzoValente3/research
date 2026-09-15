@@ -44,7 +44,7 @@ img { max-width: 100%; }
     font-weight: 600;
     letter-spacing: 0.02em;
     line-height: 1.1;
-    background: linear-gradient(120deg, #fff 35%, var(--accent) 100%);
+    background: linear-gradient(120deg, #fff 35%, var(--accent-2) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -54,7 +54,7 @@ img { max-width: 100%; }
     font-size: 0.8rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-2);
+    color: var(--muted-dark);
 }
 .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; }
 .nav-links a {
