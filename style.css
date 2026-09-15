@@ -244,3 +244,6 @@ footer a:hover { color: var(--accent); }
     .timeline .logo { left: -56px; width: 44px; height: 44px; }
 }
 
+
+section.block, #top { scroll-margin-top: 100px; }
+@media (max-width: 800px) { section.block, #top { scroll-margin-top: 0; } }
