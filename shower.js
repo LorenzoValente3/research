@@ -226,18 +226,22 @@
         ctx.restore();
     }
 
-    var running = false;
+    var running = false, slow = 0, dead = false;
     function frame(ts) {
         if (!running) return;
         var now = ts / 1000;
-        var dt = last ? Math.min(0.05, now - last) : 0.016;
+        var raw = last ? now - last : 0.016;
+        // device cannot keep up (below ~12 fps for 20 frames): give up for good
+        if (raw > 0.08) slow++; else if (slow > 0) slow--;
+        if (slow > 20) { dead = true; running = false; ctx.clearRect(0, 0, W, H); return; }
+        var dt = Math.min(0.05, raw);
         last = now;
         step(dt, now);
         draw(now);
         requestAnimationFrame(frame);
     }
     function run(on) {
-        if (on === running) return;
+        if (dead || on === running) return;
         running = on;
         last = 0;
         if (on) requestAnimationFrame(frame);
