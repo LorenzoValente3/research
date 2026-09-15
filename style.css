@@ -114,15 +114,7 @@ img { max-width: 100%; }
 }
 .hero p { color: #dfe3f0; max-width: 60ch; margin-bottom: 1rem; }
 .hero p strong { color: #fff; }
-.hero-links {
-    margin-top: 1.4rem;
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 0.3rem 0;
-    padding: 0.55rem 1rem;
-    background: rgba(11, 16, 32, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-}
+.hero-links { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: 0.3rem 0; }
 .hero-links a {
     text-decoration: none;
     font-family: var(--font-display);
