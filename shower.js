@@ -31,11 +31,11 @@
         for (var i = 0; i < MIX.length; i++) { r -= MIX[i][1]; if (r <= 0) return MIX[i][0]; }
         return 'e';
     }
-    function radLength() { return H * (0.06 + 0.04 * Math.random()); }
-    function intLength() { return H * (0.16 + 0.14 * Math.random()); }
+    function radLength() { return H * (0.08 + 0.06 * Math.random()); }
+    function intLength() { return H * (0.2 + 0.25 * Math.random()); }
     function pathLength(kind) {
         if (kind === 'e') return radLength();
-        if (kind === 'g') return radLength() * 9 / 7;
+        if (kind === 'g') return radLength() * 9 / 7 * (0.5 + 1.5 * Math.random());
         if (kind === 'h' || kind === 'n') return intLength();
         return 1e9;
     }
@@ -78,7 +78,7 @@
     function step(dt, now) {
         if (now > nextShower) {
             spawn();
-            nextShower = now + 0.9 + 1.0 * Math.random();
+            nextShower = now + 0.8 + 0.8 * Math.random();
         }
         var born = [];
         for (var i = tracks.length - 1; i >= 0; i--) {
