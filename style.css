@@ -121,9 +121,10 @@ img { max-width: 100%; }
     font-size: 0.95rem;
     letter-spacing: 0.04em;
     color: #fff;
-    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
 }
-.hero-links a:hover { border-bottom-color: var(--accent-2); }
+.hero-links a:hover { border-bottom-color: var(--accent-2); color: var(--accent-2); }
 .hero-links a + a::before { content: '\00b7'; color: var(--muted-dark); margin: 0 0.7rem; }
 .portrait img {
     width: 100%;
