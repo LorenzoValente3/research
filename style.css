@@ -20,6 +20,9 @@ body {
     background: var(--paper);
     line-height: 1.65;
     font-size: 17px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 a { color: inherit; }
 img { max-width: 100%; }
@@ -44,11 +47,9 @@ img { max-width: 100%; }
     font-weight: 600;
     letter-spacing: 0.02em;
     line-height: 1.1;
-    background: linear-gradient(120deg, #fff 35%, var(--accent-2) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
 }
+.nav-name .name em { font-style: normal; color: var(--accent-2); }
 .nav-name .sub {
     font-family: var(--font-display);
     font-size: 0.8rem;
@@ -212,6 +213,7 @@ section.block:nth-of-type(even) { background: var(--paper-2); }
 
 /* Footer */
 footer {
+    margin-top: auto;
     background: var(--ink);
     color: var(--muted-dark);
     padding: 2.5rem;
