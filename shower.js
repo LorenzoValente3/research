@@ -18,17 +18,9 @@
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
     var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
 
-    var text = document.querySelector('.hero-text'), hole = null;
     function resize() {
         W = canvas.width = canvas.clientWidth;
         H = canvas.height = canvas.clientHeight;
-        // keep the text column clear of particles
-        hole = null;
-        if (text) {
-            var c = canvas.getBoundingClientRect(), r = text.getBoundingClientRect();
-            // on narrow screens the text spans the width: let the showers pass behind it
-            if (r.width < 0.7 * W) hole = { x: r.left - c.left - 24, y: r.top - c.top - 16, w: r.width + 48, h: r.height + 32 };
-        }
     }
     function randn() {
         var u = 1 - Math.random(), v = Math.random();
@@ -51,9 +43,8 @@
         return { k: kind, x: x, y: y, a: a, e: e, left: pathLength(kind), since: 0, lx: x, ly: y };
     }
     function spawn() {
-        var kind = pickKind(), x = W * (0.05 + 0.9 * Math.random());
-        if (hole && x > hole.x && x < hole.x + hole.w) x = Math.random() < 0.5 ? hole.x * Math.random() : hole.x + hole.w + (W - hole.x - hole.w) * Math.random();
-        tracks.push(track(kind, x, -10, (Math.random() - 0.5) * 0.5, 1));
+        var kind = pickKind();
+        tracks.push(track(kind, W * (0.05 + 0.9 * Math.random()), -10, (Math.random() - 0.5) * 0.5, 1));
     }
     function deposits(kind) { return kind === 'e' || kind === 'h' || kind === 'mu'; }
 
@@ -120,16 +111,9 @@
 
     function draw(now) {
         ctx.clearRect(0, 0, W, H);
-        ctx.save();
-        if (hole) {
-            ctx.beginPath();
-            ctx.rect(0, 0, W, H);
-            ctx.rect(hole.x, hole.y, hole.w, hole.h);
-            ctx.clip('evenodd');
-        }
         for (var k = 0; k < segs.length; k++) {
             var g = segs[k];
-            var base = (g.k === 'nu' || g.k === 'n') ? 0.12 : (g.k === 'g' ? 0.18 : 0.28);
+            var base = (g.k === 'nu' || g.k === 'n') ? 0.1 : (g.k === 'g' ? 0.14 : 0.22);
             var la = base * (1 - (now - g.born) / LIFE);
             ctx.beginPath();
             ctx.setLineDash(DASH[g.k] || []);
@@ -142,13 +126,12 @@
         ctx.setLineDash([]);
         for (var i = 0; i < dots.length; i++) {
             var d = dots[i];
-            var a = 0.5 * (1 - (now - d.born) / LIFE);
+            var a = 0.4 * (1 - (now - d.born) / LIFE);
             ctx.beginPath();
             ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
             ctx.fillStyle = 'rgba(' + d.c + ',' + a.toFixed(3) + ')';
             ctx.fill();
         }
-        ctx.restore();
     }
 
     function frame(ts) {
