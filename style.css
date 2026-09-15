@@ -223,7 +223,8 @@ footer a:hover { color: var(--accent); }
 
 @media (max-width: 800px) {
     .nav { position: static; padding: 0.9rem 1.2rem; flex-direction: column; align-items: flex-start; gap: 0.6rem; background: var(--ink); }
-    .nav-links a { padding: 0.35rem 0.7rem; font-size: 0.85rem; }
+    .nav-links { justify-content: flex-start; gap: 0.4rem; }
+    .nav-links a, .nav-links a:last-child { padding: 0.35rem 0.7rem; font-size: 0.85rem; border: 1.5px solid rgba(255, 255, 255, 0.7); }
     .hero { min-height: auto; padding: 3rem 1.2rem 3rem; }
     .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
     .portrait { max-width: 260px; }
