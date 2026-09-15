@@ -14,7 +14,7 @@
     var dots = [], tracks = [], segs = [];
     var LIFE = 7, SPEED = 170, MAX_DOTS = 4000, MAX_TRACKS = 120;
     var E_CRIT = 1 / 32, STEP = 7;
-    var COLOR = { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
+    var COLOR = { e: '31,78,121', g: '90,86,78', h: '139,42,42', n: '139,42,42', mu: '60,58,52', nu: '60,58,52' };
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
     var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
 
@@ -113,20 +113,20 @@
         ctx.clearRect(0, 0, W, H);
         for (var k = 0; k < segs.length; k++) {
             var g = segs[k];
-            var base = (g.k === 'nu' || g.k === 'n') ? 0.12 : (g.k === 'g' ? 0.18 : 0.28);
+            var base = (g.k === 'nu' || g.k === 'n') ? 0.14 : (g.k === 'g' ? 0.22 : 0.38);
             var la = base * (1 - (now - g.born) / LIFE);
             ctx.beginPath();
             ctx.setLineDash(DASH[g.k] || []);
             ctx.moveTo(g.x1, g.y1);
             ctx.lineTo(g.x2, g.y2);
             ctx.lineWidth = 0.4 + 1.0 * Math.sqrt(g.e);
-            ctx.strokeStyle = 'rgba(' + COLOR[g.k] + ',' + la.toFixed(3) + ')';
+            ctx.strokeStyle = 'rgba(40,38,34,' + la.toFixed(3) + ')';
             ctx.stroke();
         }
         ctx.setLineDash([]);
         for (var i = 0; i < dots.length; i++) {
             var d = dots[i];
-            var a = 0.5 * (1 - (now - d.born) / LIFE);
+            var a = 0.65 * (1 - (now - d.born) / LIFE);
             ctx.beginPath();
             ctx.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
             ctx.fillStyle = 'rgba(' + d.c + ',' + a.toFixed(3) + ')';
