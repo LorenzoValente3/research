@@ -23,9 +23,11 @@
         W = canvas.width = canvas.clientWidth;
         H = canvas.height = canvas.clientHeight;
         // keep the text column clear of particles
+        hole = null;
         if (text) {
             var c = canvas.getBoundingClientRect(), r = text.getBoundingClientRect();
-            hole = { x: r.left - c.left - 24, y: r.top - c.top - 16, w: r.width + 48, h: r.height + 32 };
+            // on narrow screens the text spans the width: let the showers pass behind it
+            if (r.width < 0.7 * W) hole = { x: r.left - c.left - 24, y: r.top - c.top - 16, w: r.width + 48, h: r.height + 32 };
         }
     }
     function randn() {
