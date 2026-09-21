@@ -122,6 +122,14 @@ img { max-width: 100%; }
     font-size: 1.05rem;
     margin-bottom: 1.6rem;
 }
+.hero .avail {
+    font-family: var(--font-display);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    margin: -1.1rem 0 1.6rem;
+}
 .hero p { color: #dfe3f0; max-width: 60ch; margin-bottom: 1rem; }
 .hero p strong { color: #fff; }
 .hero-links { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: 0.7rem; }
@@ -136,7 +144,7 @@ img { max-width: 100%; }
     font-size: 0.9rem;
     transition: border-color 0.2s, background 0.2s;
 }
-.hero-links a i { margin-right: 0.2rem; }
+.hero-links a svg { width: 1em; height: 1em; fill: currentColor; vertical-align: -0.125em; margin-right: 0.3rem; }
 .hero-links a img { height: 1.15em; vertical-align: -0.2em; margin-right: 0.2rem; }
 .hero-links a:hover { background: linear-gradient(rgba(255, 181, 71, 0.12), rgba(255, 181, 71, 0.12)), rgba(20, 27, 51, 0.9); border-color: var(--accent-2); }
 /* in the hero the links are one strip under text and portrait, from the left
