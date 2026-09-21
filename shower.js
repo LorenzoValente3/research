@@ -39,7 +39,7 @@
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
     var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
 
-    var text = page ? null : document.querySelector('.hero-text'), hole = null;
+    var text = page ? null : document.querySelector('.hero-inner'), hole = null;
     function overlay() {
         var c = document.createElement('canvas');
         c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1';
