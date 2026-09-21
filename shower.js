@@ -88,6 +88,17 @@
         t.e0 = e;
         tracks.push(t);
     }
+    // a click in the hero fires a primary from that point, only kinds that
+    // shower and in the top decade of the spectrum, so every click shows
+    function fire(ev) {
+        if (!running || tracks.length >= MAX_TRACKS) return;
+        var c = canvas.getBoundingClientRect();
+        var e = Math.pow(10, E_MAX_DEC - Math.random());
+        var t = track(['e', 'g', 'h'][Math.floor(3 * Math.random())],
+            ev.clientX - c.left, ev.clientY - c.top, (Math.random() - 0.5) * 0.5, e);
+        t.e0 = e;
+        tracks.push(t);
+    }
     function deposits(kind) { return kind === 'e' || kind === 'h' || kind === 'mu'; }
 
     function split(p, now, born) {
@@ -250,6 +261,8 @@
     function init() {
         resize();
         window.addEventListener('resize', resize);
+        // the canvas ignores the pointer, the hero around it takes the click
+        canvas.parentNode.addEventListener('click', fire);
         for (var t = -PREROLL; t < 0; t += 1 / 30) step(1 / 30, t);
         draw(0);
         // animate only while the hero is on screen (battery on phones)
