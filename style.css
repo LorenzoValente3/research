@@ -246,3 +246,17 @@ footer {
 
 section.block, #top { scroll-margin-top: 100px; }
 @media (max-width: 800px) { section.block, #top { scroll-margin-top: 0; } }
+
+/* Large screens: everything scales with the root font. At 1500px each value
+   equals the fixed one above (16px root), so nothing jumps at the breakpoint. */
+@media (min-width: 1500px) {
+    html { font-size: clamp(16px, 0.57vw + 7.45px, 22px); }
+    body { font-size: 1.0625rem; }
+    .wrap { max-width: 56.25rem; }
+    .hero-inner { max-width: 68.75rem; grid-template-columns: 1fr 18.75rem; }
+    .fig { max-width: 45rem; }
+    .fig-small { width: 23.75rem; }
+    .timeline { margin-left: 4.75rem; }
+    .timeline .logo { left: -4.5rem; width: 3.25rem; height: 3.25rem; }
+    section.block, #top { scroll-margin-top: 6.25rem; }
+}
