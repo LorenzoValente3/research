@@ -16,9 +16,11 @@
 // deposit nothing. Off with reduced motion. Phones (narrow or touch) get a
 // lighter budget: 1 to 100 GeV, fewer deposits and tracks, sparser showers.
 // Two passes of the same code. The hero pass is the ambient cascade. The page
-// pass is a fixed canvas over the whole site that only answers clicks outside
-// the hero: positions are in page coordinates, so a shower scrolls with the
-// text, colours are dark because the sections are light, and it sleeps when
+// pass is a fixed canvas BEHIND the whole site (z-index -1, the text is painted
+// over it) that only answers clicks outside the hero: positions are in page
+// coordinates, so a shower scrolls with the text, colours are dark because the
+// sections are light, it is dimmed inside the reading column exactly like the
+// hero cascade behind the hero text, it fades faster, and it sleeps when
 // nothing is alive.
 [false, true].forEach(function (page) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -28,7 +30,7 @@
     var W = 0, H = 0, B = 0, last = 0, nextShower = -1e9;
     var dots = [], tracks = [], segs = [];
     var LITE = window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
-    var LIFE = 7, SPEED = 170, MAX_DOTS = LITE ? 1500 : 5000, MAX_TRACKS = LITE ? 150 : 400;
+    var LIFE = page ? 4 : 7, SPEED = 170, MAX_DOTS = LITE ? 1500 : 5000, MAX_TRACKS = LITE ? 150 : 400;
     var E_MAX_DEC = LITE ? 2 : 3, GAP = LITE ? 1.5 : 1.0, PREROLL = LITE ? 0 : 8;
     var E_CRIT = 0.01, STEP = 7;
     var COLOR = page
@@ -40,15 +42,21 @@
     var text = page ? null : document.querySelector('.hero-text'), hole = null;
     function overlay() {
         var c = document.createElement('canvas');
-        c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5';
+        c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1';
         document.body.appendChild(c);
         return c;
     }
     function resize() {
         W = canvas.width = canvas.clientWidth;
         B = H = canvas.height = canvas.clientHeight;
-        // particles are drawn dimmer behind the text block
+        // particles are drawn dimmer behind the text block: the hero text, or
+        // on the page the reading column at any height
         hole = null;
+        var col = page && document.querySelector('.wrap');
+        if (col) {
+            var w = col.getBoundingClientRect();
+            hole = { x: w.left - 16, y: 0, w: w.width + 32, h: H };
+        }
         if (text) {
             var c = canvas.getBoundingClientRect(), r = text.getBoundingClientRect();
             hole = { x: r.left - c.left - 16, y: r.top - c.top - 12, w: r.width + 32, h: r.height + 24 };
@@ -109,7 +117,10 @@
     // footer (B).
     function fire(ev) {
         var el = ev.target, c = canvas.getBoundingClientRect();
+        var sel = window.getSelection && window.getSelection();
         if (dead || tracks.length >= MAX_TRACKS || (!page && !running)) return;
+        // someone selecting text or double clicking is reading, not playing
+        if (ev.detail > 1 || (sel && String(sel))) return;
         if (el.closest && el.closest(page ? 'a, button, nav, .hero, footer' : 'a, button')) return;
         var x = ev.clientX - c.left, y = ev.clientY - c.top;
         if (page) {
@@ -215,10 +226,12 @@
     }
 
     function inHole(x, y) {
-        return x >= hole.x && x <= hole.x + hole.w && y >= hole.y && y <= hole.y + hole.h;
+        return x >= hole.x && x <= hole.x + hole.w && (page || (y >= hole.y && y <= hole.y + hole.h));
     }
     // inside: undefined paints all, true only what falls in the text hole, false the rest
     function paint(now, gain, inside) {
+        ctx.save();
+        if (page) ctx.translate(-window.scrollX, -window.scrollY);
         for (var k = 0; k < segs.length; k++) {
             var g = segs[k];
             if (inside !== undefined && inHole((g.x1 + g.x2) / 2, (g.y1 + g.y2) / 2) !== inside) continue;
@@ -242,17 +255,12 @@
             ctx.fillStyle = 'rgba(' + d.c + ',' + a.toFixed(3) + ')';
             ctx.fill();
         }
+        ctx.restore();
     }
 
     function draw(now) {
         ctx.clearRect(0, 0, W, H);
-        if (!hole) {
-            ctx.save();
-            if (page) ctx.translate(-window.scrollX, -window.scrollY);
-            paint(now, 1);
-            ctx.restore();
-            return;
-        }
+        if (!hole) { paint(now, 1); return; }
         ctx.save();
         ctx.beginPath();
         ctx.rect(0, 0, W, H);

@@ -140,8 +140,10 @@ img { max-width: 100%; }
 }
 
 /* Sections */
-section.block { padding: 5rem 2.5rem; }
-section.block:nth-of-type(even) { background: var(--paper-2); }
+section.block { padding: 5rem 2.5rem; position: relative; }
+/* the white band of the even sections sits below the click-shower canvas
+   (z-index -1, see shower.js), so the showers pass behind the text everywhere */
+section.block:nth-of-type(even)::before { content: ''; position: absolute; inset: 0; z-index: -2; background: var(--paper-2); }
 .wrap { max-width: 900px; margin: 0 auto; }
 .block h2 {
     font-family: var(--font-display);
@@ -247,10 +249,12 @@ footer {
 section.block, #top { scroll-margin-top: 100px; }
 @media (max-width: 800px) { section.block, #top { scroll-margin-top: 0; } }
 
-/* Large screens: everything scales with the root font. At 1500px each value
-   equals the fixed one above (16px root), so nothing jumps at the breakpoint. */
+/* Large screens: above 1500px the page is the 1500px design zoomed in
+   proportion to the width (root font = 16px * width / 1500, up to 1.75x), so
+   column, margins and text keep the same proportions on any monitor. At 1500px
+   each value equals the fixed one above, so nothing jumps at the breakpoint. */
 @media (min-width: 1500px) {
-    html { font-size: clamp(16px, 0.57vw + 7.45px, 22px); }
+    html { font-size: min(1.0667vw, 28px); }
     body { font-size: 1.0625rem; }
     .wrap { max-width: 56.25rem; }
     .hero-inner { max-width: 68.75rem; grid-template-columns: 1fr 18.75rem; }
@@ -258,5 +262,7 @@ section.block, #top { scroll-margin-top: 100px; }
     .fig-small { width: 23.75rem; }
     .timeline { margin-left: 4.75rem; }
     .timeline .logo { left: -4.5rem; width: 3.25rem; height: 3.25rem; }
+    .timeline li::before { left: calc(-0.375rem - 1px); width: 0.75rem; height: 0.75rem; }
+    .repos { grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
     section.block, #top { scroll-margin-top: 6.25rem; }
 }
