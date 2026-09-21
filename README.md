@@ -26,7 +26,7 @@ A single static page, no framework and no build step.
 |---|---|
 | `index.html` | the whole page |
 | `style.css` | layout and colours |
-| `shower.js` | the particle cascade behind the hero, plain canvas, no libraries. Click in the hero to fire a shower. |
+| `shower.js` | the particle cascade behind the hero, plain canvas, no libraries. Click anywhere outside a link to fire a shower. |
 | `images/` | portrait, figures and logos |
 | `cv/` | the CV served by the site |
 

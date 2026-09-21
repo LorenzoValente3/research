@@ -15,24 +15,38 @@
 // Landau-like. Muons ionise minimally and leave. Neutrinos and neutrons
 // deposit nothing. Off with reduced motion. Phones (narrow or touch) get a
 // lighter budget: 1 to 100 GeV, fewer deposits and tracks, sparser showers.
-(function () {
-    var canvas = document.querySelector('.shower');
-    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+// Two passes of the same code. The hero pass is the ambient cascade. The page
+// pass is a fixed canvas over the whole site that only answers clicks outside
+// the hero: positions are in page coordinates, so a shower scrolls with the
+// text, colours are dark because the sections are light, and it sleeps when
+// nothing is alive.
+[false, true].forEach(function (page) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var canvas = page ? overlay() : document.querySelector('.shower');
+    if (!canvas) return;
     var ctx = canvas.getContext('2d');
-    var W = 0, H = 0, last = 0, nextShower = -1e9;
+    var W = 0, H = 0, B = 0, last = 0, nextShower = -1e9;
     var dots = [], tracks = [], segs = [];
     var LITE = window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
     var LIFE = 7, SPEED = 170, MAX_DOTS = LITE ? 1500 : 5000, MAX_TRACKS = LITE ? 150 : 400;
     var E_MAX_DEC = LITE ? 2 : 3, GAP = LITE ? 1.5 : 1.0, PREROLL = LITE ? 0 : 8;
     var E_CRIT = 0.01, STEP = 7;
-    var COLOR = { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
+    var COLOR = page
+        ? { e: '14,124,139', g: '28,31,43', h: '196,112,0', n: '196,112,0', mu: '91,96,114', nu: '91,96,114' }
+        : { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
     var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
 
-    var text = document.querySelector('.hero-text'), hole = null;
+    var text = page ? null : document.querySelector('.hero-text'), hole = null;
+    function overlay() {
+        var c = document.createElement('canvas');
+        c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5';
+        document.body.appendChild(c);
+        return c;
+    }
     function resize() {
         W = canvas.width = canvas.clientWidth;
-        H = canvas.height = canvas.clientHeight;
+        B = H = canvas.height = canvas.clientHeight;
         // particles are drawn dimmer behind the text block
         hole = null;
         if (text) {
@@ -88,16 +102,27 @@
         t.e0 = e;
         tracks.push(t);
     }
-    // a click in the hero fires a primary from that point, only kinds that
-    // shower and in the top decade of the spectrum, so every click shows
+    // a click fires a primary from that point, only kinds that shower and in
+    // the top decade of the spectrum, so every click shows. Links keep their
+    // click. The page pass leaves the hero to the hero pass, and the dark nav
+    // and footer alone: its colours do not read there, so showers stop at the
+    // footer (B).
     function fire(ev) {
-        if (!running || tracks.length >= MAX_TRACKS) return;
-        var c = canvas.getBoundingClientRect();
+        var el = ev.target, c = canvas.getBoundingClientRect();
+        if (dead || tracks.length >= MAX_TRACKS || (!page && !running)) return;
+        if (el.closest && el.closest(page ? 'a, button, nav, .hero, footer' : 'a, button')) return;
+        var x = ev.clientX - c.left, y = ev.clientY - c.top;
+        if (page) {
+            var f = document.querySelector('footer');
+            x += window.scrollX;
+            y += window.scrollY;
+            B = f ? f.getBoundingClientRect().top + window.scrollY : document.documentElement.scrollHeight;
+        }
         var e = Math.pow(10, E_MAX_DEC - Math.random());
-        var t = track(['e', 'g', 'h'][Math.floor(3 * Math.random())],
-            ev.clientX - c.left, ev.clientY - c.top, (Math.random() - 0.5) * 0.5, e);
+        var t = track(['e', 'g', 'h'][Math.floor(3 * Math.random())], x, y, (Math.random() - 0.5) * 0.5, e);
         t.e0 = e;
         tracks.push(t);
+        run(true);
     }
     function deposits(kind) { return kind === 'e' || kind === 'h' || kind === 'mu'; }
 
@@ -139,7 +164,7 @@
     }
 
     function step(dt, now) {
-        if (now > nextShower) {
+        if (!page && now > nextShower) {
             spawn();
             nextShower = now + GAP * (1 + Math.random());
         }
@@ -181,7 +206,7 @@
                     });
                 }
             }
-            if (p.y > H + 10 || p.x < -20 || p.x > W + 20) { tracks.splice(i, 1); continue; }
+            if (p.y > B + 10 || p.x < -20 || p.x > W + 20) { tracks.splice(i, 1); continue; }
             if (p.left <= 0) { tracks.splice(i, 1); if (!p.stub && !p.cloud) split(p, now, born); }
         }
         tracks = tracks.concat(born);
@@ -221,7 +246,13 @@
 
     function draw(now) {
         ctx.clearRect(0, 0, W, H);
-        if (!hole) { paint(now, 1); return; }
+        if (!hole) {
+            ctx.save();
+            if (page) ctx.translate(-window.scrollX, -window.scrollY);
+            paint(now, 1);
+            ctx.restore();
+            return;
+        }
         ctx.save();
         ctx.beginPath();
         ctx.rect(0, 0, W, H);
@@ -249,6 +280,7 @@
         last = now;
         step(dt, now);
         draw(now);
+        if (page && !tracks.length && !dots.length && !segs.length) { running = false; return; }
         requestAnimationFrame(frame);
     }
     function run(on) {
@@ -261,8 +293,9 @@
     function init() {
         resize();
         window.addEventListener('resize', resize);
-        // the canvas ignores the pointer, the hero around it takes the click
-        canvas.parentNode.addEventListener('click', fire);
+        // the canvas ignores the pointer, the hero (or the document) takes the click
+        (page ? document : canvas.parentNode).addEventListener('click', fire);
+        if (page) return;
         for (var t = -PREROLL; t < 0; t += 1 / 30) step(1 / 30, t);
         draw(0);
         // animate only while the hero is on screen (battery on phones)
@@ -274,4 +307,4 @@
     }
     // phones: let the page paint first, start the cascade afterwards
     if (LITE) setTimeout(init, 300); else init();
-})();
+});
