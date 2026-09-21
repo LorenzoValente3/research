@@ -106,9 +106,14 @@ img { max-width: 100%; }
     grid-template-columns: 1fr 300px;
     gap: 2rem 3.5rem;
     align-items: center;
-    animation: rise 0.9s ease-out;
 }
+/* entrance: text and links fade in slowly, the photo takes twice as long */
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.hero-text, .hero-inner > .hero-links { animation: rise 2s ease-out both; }
+.portrait { animation: rise 4s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+    .hero-text, .hero-inner > .hero-links, .portrait, .stars { animation: none; }
+}
 .hero .tagline {
     font-family: var(--font-display);
     color: var(--accent-2);
