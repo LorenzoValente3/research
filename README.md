@@ -1,16 +1,45 @@
-# Lorenzo Valente's Research Website
+# Lorenzo Valente, research website
 
-Welcome to the GitHub repository for my personal research website. This website showcases my research work and provides information about my academic and professional journey in the field of physics and artificial intelligence.
+Source of my personal website, served with GitHub Pages at
+**https://lorenzovalente3.github.io/research/**
 
-## Website Contents
+I am a PhD candidate at the Institute of Experimental Physics of the University
+of Hamburg. I work on generative models for the simulation of particle showers
+in calorimeters, and on making one shower model reusable across detector
+geometries.
 
-- **Biography**: Learn more about my academic and professional background.
-- **Research**: Explore my research projects and interests.
-- **Publications**: Access my published research papers and articles.
-- **Talks**: Find information about the talks and presentations I have delivered.
+## What is on the site
+
+- **About**: short biography and timeline.
+- **Research**: multi-geometry pre-training, cross-geometry transfer, datasets.
+- **Publications**: papers with links to arXiv and the journal.
+- **Talks**: conference talks with slides and recordings where public.
+- **Teaching**
+- **Code and data**: repositories, datasets and pre-trained weights.
+- **CV**: `cv/Lorenzo_Valente_CV.pdf`
+
+## How it is built
+
+A single static page, no framework and no build step.
+
+| File | Role |
+|---|---|
+| `index.html` | the whole page |
+| `style.css` | layout and colours |
+| `shower.js` | the particle cascade behind the hero, plain canvas, no libraries. Click in the hero to fire a shower. |
+| `images/` | portrait, figures and logos |
+| `cv/` | the CV served by the site |
+
+To preview it locally:
+
+```bash
+python3 -m http.server 8000
+# then open http://localhost:8000
+```
+
+After a change to `style.css` or `shower.js`, raise the `?v=` number on the
+matching line of `index.html`, so browsers drop the cached copy.
 
 ## Contact
 
-Feel free to reach out to me via email at [lorenzo.valente3@studio.unibo.it](mailto:lorenzo.valente3@studio.unibo.it) for any inquiries or collaborations.
-
-Thank you for visiting my research website!
+[lorenzo.valente@uni-hamburg.de](mailto:lorenzo.valente@uni-hamburg.de)
