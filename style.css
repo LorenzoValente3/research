@@ -150,7 +150,7 @@ img { max-width: 100%; }
 /* in the hero the links are one strip under text and portrait, from the left
    edge of the text to the right edge of the photo */
 .hero-inner > .hero-links { grid-column: 1 / -1; margin-top: 0; }
-@media (min-width: 1000px) {
+@media (min-width: 1040px) {
     .hero-inner > .hero-links { flex-wrap: nowrap; }
     .hero-inner > .hero-links a { flex: 1 1 auto; text-align: center; white-space: nowrap; }
 }
