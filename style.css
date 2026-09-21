@@ -131,6 +131,7 @@ img { max-width: 100%; }
     transition: border-color 0.2s, background 0.2s;
 }
 .hero-links a i { margin-right: 0.2rem; }
+.hero-links a img { height: 1.15em; vertical-align: -0.2em; margin-right: 0.2rem; }
 .hero-links a:hover { background: rgba(255, 181, 71, 0.12); border-color: var(--accent-2); }
 .portrait img {
     width: 100%;
