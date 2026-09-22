@@ -164,8 +164,8 @@
         <h3>Multi-geometry pre-training</h3>
         <p>I extend a flow matching transformer for shower point clouds with conditioning on the calorimeter geometry and pre-train it across several detectors. Fine-tuned on a detector it has never seen, it needs two orders of magnitude fewer Geant4 showers to match a model trained from scratch on a full dataset (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</p>
         <figure class="fig">
-            <img src="images/transfer_allegro.png" width="1794" height="2424" alt="Transfer to FCCee-ALLEGRO: longitudinal profile, radial profile and cell energy spectrum for four training strategies, compared with Geant4">
-            <figcaption>Transfer to FCCee-ALLEGRO, a calorimeter outside the pre-training pool. Longitudinal profile, radial profile and cell energy spectrum, one row per training strategy, for four sizes of the ALLEGRO training set, with Geant4 as reference. From arXiv:2608.18233.</figcaption>
+            <img src="images/sample_efficiency_allegro.png" width="1800" height="1539" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for the longitudinal profile, the radial profile, the cell energy spectrum and their geometric mean, comparing training from scratch with fine-tuning from the LEMURS, SimpleBox and Mini pre-trainings">
+            <figcaption>Sample efficiency on FCCee-ALLEGRO, a calorimeter outside the pre-training pool. Sliced Wasserstein distance to Geant4 as a function of the number of training showers, for training from scratch and for fine-tuning from each pre-trained model. Bands span the mean &plusmn; one standard deviation over five seeds, and the dashed line is the Geant4-versus-Geant4 statistical resolution. From arXiv:2608.18233.</figcaption>
         </figure>
         <h3>Cross-geometry transfer</h3>
         <p>The first step was to show that a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>).</p>
