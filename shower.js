@@ -3,7 +3,9 @@
 // proton), n (neutron or neutral kaon), mu (muon), nu (neutrino).
 // Energies in GeV. Primaries enter log-uniform between 1 GeV and 1 TeV.
 // Electrons and photons cascade Heitler-style (split after one radiation
-// length, energy halves, small angular kick). Hadrons ionise minimally until
+// length, energy halves, multiple scattering kick of ~14 MeV/E per radiation
+// length, so the core stays thin and only the soft tail fans out, and an
+// interaction length of ~9 radiation lengths as in iron). Hadrons ionise minimally until
 // one interaction length, then break into secondaries whose number grows with
 // the energy, softer ones at wider angles, some of them neutral pions that
 // show up as photons, plus a few slow nuclear fragments in every direction.
@@ -71,7 +73,7 @@
         for (var i = 0; i < MIX.length; i++) { r -= MIX[i][1]; if (r <= 0) return MIX[i][0]; }
         return 'e';
     }
-    function radLength() { return H * (0.05 + 0.04 * Math.random()); }
+    function radLength() { return H * (0.025 + 0.02 * Math.random()); }
     function intLength() { return H * (0.2 + 0.25 * Math.random()); }
     function pathLength(kind) {
         if (kind === 'e') return radLength();
@@ -141,12 +143,12 @@
         var out = [];
         if (p.k === 'e') {
             // bremsstrahlung: electron keeps half, photon takes half
-            var kick = 0.12 + 0.18 * Math.sqrt(E_CRIT / p.e);
+            var kick = Math.min(0.6, 0.014 / p.e);
             out.push(track('e', p.x, p.y, p.a - kick * (0.4 + Math.random()), p.e / 2));
             out.push(track('g', p.x, p.y, p.a + kick * (0.4 + Math.random()), p.e / 2));
         } else if (p.k === 'g') {
             // pair production
-            var k2 = 0.12 + 0.18 * Math.sqrt(E_CRIT / p.e);
+            var k2 = Math.min(0.6, 0.014 / p.e);
             out.push(track('e', p.x, p.y, p.a - k2 * (0.4 + Math.random()), p.e / 2));
             out.push(track('e', p.x, p.y, p.a + k2 * (0.4 + Math.random()), p.e / 2));
         } else {
