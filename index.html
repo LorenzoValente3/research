@@ -56,7 +56,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=30">
+    <link rel="stylesheet" href="style.css?v=31">
 </head>
 <body>
 
@@ -104,7 +104,7 @@
         <h3>Multi-geometry pre-training</h3>
         <p>I condition a flow matching transformer for shower point clouds on the calorimeter geometry and pre-train it on several detectors. Fine-tuned on a detector it has never seen, it matches a model trained from scratch on a full dataset with two orders of magnitude fewer Geant4 showers (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</p>
         <figure class="fig">
-            <img src="images/sample_efficiency_allegro.png" width="1800" height="1539" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for the longitudinal profile, the radial profile, the cell energy spectrum and their geometric mean, comparing training from scratch with fine-tuning from the LEMURS, SimpleBox and Mini pre-trainings">
+            <a href="images/sample_efficiency_allegro.png" target="_blank"><img src="images/sample_efficiency_allegro.png" width="1800" height="1539" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for the longitudinal profile, the radial profile, the cell energy spectrum and their geometric mean, comparing training from scratch with fine-tuning from the LEMURS, SimpleBox and Mini pre-trainings"></a>
             <figcaption>FCCee-ALLEGRO, a calorimeter outside the pre-training pool: sliced Wasserstein distance to Geant4 against the number of training showers, from scratch and fine-tuned. Bands: &plusmn; one standard deviation over five seeds. Dashed line: Geant4 statistical resolution. From arXiv:2608.18233.</figcaption>
         </figure>
         <h3>Cross-geometry transfer</h3>

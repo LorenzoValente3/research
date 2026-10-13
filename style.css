@@ -167,7 +167,7 @@ section.block { padding: 5rem 2.5rem; position: relative; }
 /* the white band of the even sections sits below the click-shower canvas
    (z-index -1, see shower.js), so the showers pass behind the text everywhere */
 section.block:nth-of-type(even)::before { content: ''; position: absolute; inset: 0; z-index: -2; background: var(--paper-2); }
-.wrap { max-width: 900px; margin: 0 auto; }
+.wrap { max-width: 780px; margin: 0 auto; }
 .block h2 {
     font-family: var(--font-display);
     font-size: 2rem;
@@ -235,7 +235,9 @@ section.note p { margin-bottom: 0.9rem; }
 .news li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.8rem; padding: 0.45rem 0; border-bottom: 1px solid #e3e5ec; }
 .news li:last-child { border-bottom: none; }
 .news .when { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.05em; color: var(--muted); padding-top: 0.1rem; }
-.fig { margin: 1.2rem auto 1.8rem; max-width: 720px; }
+.fig { margin: 1.2rem auto 1.8rem; max-width: 600px; }
+/* the figure opens full size on click, phones need it to read the panels */
+.fig a { display: block; cursor: zoom-in; }
 .fig img { display: block; width: 100%; height: auto; border: 1px solid #e3e5ec; background: #fff; }
 .fig figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 0.6rem; }
 .fig-small { float: right; width: 380px; max-width: 45%; margin: 0.2rem 0 1rem 2rem; }
@@ -293,6 +295,9 @@ footer {
     .timeline { margin-left: 56px; }
     .timeline .logo { left: -56px; width: 44px; height: 44px; }
 }
+@media (max-width: 640px) {
+    .news li { grid-template-columns: 1fr; gap: 0.1rem; }
+}
 
 
 section.block, #top { scroll-margin-top: 100px; }
@@ -305,9 +310,9 @@ section.block, #top { scroll-margin-top: 100px; }
 @media (min-width: 1500px) {
     html { font-size: min(1.0667vw, 28px); }
     body { font-size: 1.0625rem; }
-    .wrap { max-width: 56.25rem; }
+    .wrap { max-width: 48.75rem; }
     .hero-inner { max-width: 68.75rem; grid-template-columns: 1fr 18.75rem; }
-    .fig { max-width: 45rem; }
+    .fig { max-width: 37.5rem; }
     .fig-small { width: 23.75rem; }
     .timeline { margin-left: 4.75rem; }
     .timeline .logo { left: -4.5rem; width: 3.25rem; height: 3.25rem; }
