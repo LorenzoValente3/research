@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>Multi-geometry pre-training | Lorenzo Valente</title>
+    <meta name="description" content="A short summary of the multi-geometry pre-training paper: one shower model pre-trained on many calorimeters and fine-tuned on one it has never seen.">
+    <link rel="canonical" href="https://lorenzovalente3.github.io/research/notes/multi-geometry.html">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1020'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%232ec4d6'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css?v=28">
+</head>
+<body>
+
+<nav class="nav">
+    <a class="nav-name" href="../">
+        <span class="name">Lorenzo <em>Valente</em></span>
+        <span class="sub">Particle physics &#9670; Machine learning</span>
+    </a>
+    <div class="nav-links">
+        <a href="../#research">Research</a>
+        <a href="../#publications">Publications</a>
+    </div>
+</nav>
+
+<section class="block note">
+    <div class="wrap">
+        <h2>Multi-geometry pre-training, in short</h2>
+        <p class="venue">Summary of T. Buss, H. Day-Hall, F. Gaede, G. Kasieczka, K. Krüger, P. McKeown, L. Valente, <a href="https://arxiv.org/abs/2608.18233" target="_blank">Transferable Fast Calorimeter Shower Generation via Multi-Geometry Pre-training</a>, arXiv:2608.18233, accepted in JINST.</p>
+        <h3>The problem</h3>
+        <p>Detailed <a href="https://geant4.web.cern.ch/" target="_blank">Geant4</a> simulation of calorimeter showers takes most of the computing budget of a high-energy physics experiment. Generative models can produce showers much faster, but so far each of them has been tied to the detector it was trained on, and every new geometry needed a large dataset of its own.</p>
+        <h3>The idea</h3>
+        <p>We describe a shower as a set of energy deposits, a point cloud, and give one shower model two numbers that characterise the calorimeter: its sampling fraction and its number of layers. The model is pre-trained once on many detectors and then fine-tuned on a detector it has never seen, with few showers from that detector.</p>
+        <p>The pre-training detectors do not have to be real. SimpleBox is a family of 10<sup>4</sup> box calorimeters that spans the plane of sampling fraction and number of layers. We compare it with pre-training on four realistic calorimeters (LEMURS), with the same budget of four million showers.</p>
+        <figure class="fig">
+            <img src="../images/sample_efficiency_allegro.png" width="1800" height="1539" loading="lazy" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for training from scratch and fine-tuning from each pre-trained model">
+            <figcaption>Distance to Geant4 on FCCee-ALLEGRO, a calorimeter outside the pre-training pool, as a function of the number of fine-tuning showers. Lower is better. From arXiv:2608.18233.</figcaption>
+        </figure>
+        <h3>What we found</h3>
+        <p>On FCCee-ALLEGRO, a noble-liquid calorimeter outside the pre-training pool, with a thousand showers for fine-tuning, the sliced Wasserstein distance to Geant4 drops by a factor of 5.2 with the synthetic prior and 8.0 with the realistic one, compared with training from scratch. With more fine-tuning showers the synthetic prior performs better than the realistic one. On this target, geometric diversity is enough, and detector realism is not what makes the transfer work.</p>
+        <p>A compute-budget analysis places the break-even at about five downstream detectors in GPU-hours, and a pre-training on only 2.5% of the pool still beats training from scratch at every fine-tuning size.</p>
+        <h3>Limits</h3>
+        <p>The study covers photon showers only. Hadronic showers, which dominate the simulation cost, are not addressed. The two numbers fix the energy scale and the longitudinal sampling but not the lateral (Moli&egrave;re) scale of the material, which the model learns only during fine-tuning. The most extreme extrapolation, to ALLEGRO, is tested on one target. The natural next steps are a pre-training that covers all particle species and a conditioning on the full calorimeter description.</p>
+        <h3>Code and data</h3>
+        <p>Code: <a href="https://github.com/FLC-QU-hep/AllShowers/tree/multi-geometry" target="_blank">AllShowers</a> and <a href="https://github.com/FLC-QU-hep/PointCountFM/tree/multi-geometry" target="_blank">PointCountFM</a> (multi-geometry branches). Datasets: <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank">University of Hamburg research data repository</a>, produced with <a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">multi-calorimeter-dataset</a>. Pre-trained weights: <a href="https://huggingface.co/FLC-QU-hep" target="_blank">Hugging Face</a>.</p>
+    </div>
+</section>
+
+<footer>
+    <div style="margin-top:1rem"><a href="../">Lorenzo Valente</a> &middot; University of Hamburg</div>
+</footer>
+
+</body>
+</html>

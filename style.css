@@ -97,6 +97,9 @@ img { max-width: 100%; }
     opacity: 0.6;
 }
 .shower { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.shower-caption { position: absolute; right: 1.2rem; bottom: 0.8rem; max-width: min(34rem, 70%); text-align: right; font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.03em; color: var(--muted-dark); }
+.shower-caption a { color: var(--accent); }
+.shower-caption sup, .shower-caption sub { font-size: 0.7em; line-height: 0; }
 @keyframes twinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.75; } }
 .hero-inner {
     position: relative;
@@ -217,6 +220,22 @@ section.block:nth-of-type(even)::before { content: ''; position: absolute; inset
 .pubs .venue, .talks .venue { color: var(--muted); font-size: 0.95rem; }
 .pubs .contrib { color: var(--muted); font-size: 0.92rem; margin-top: 0.2rem; }
 .pubs .contrib span { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
+.pubs .links { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.05em; margin-top: 0.3rem; }
+.pubs li.has-thumb { display: flex; gap: 1.2rem; align-items: flex-start; }
+.pubs .thumb { flex: 0 0 200px; width: 200px; height: auto; border: 1px solid #e3e5ec; background: #fff; margin-top: 0.2rem; }
+.pick { font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: var(--accent-2); padding: 0.1rem 0.45rem; border-radius: 3px; margin-left: 0.3rem; vertical-align: 0.15em; white-space: nowrap; }
+@media (max-width: 640px) {
+    .pubs li.has-thumb { flex-direction: column; gap: 0.6rem; }
+    .pubs .thumb { flex-basis: auto; width: 100%; max-width: 360px; }
+}
+section.note { padding-top: 9rem; min-height: 70vh; }
+section.note .venue { color: var(--muted); font-size: 0.95rem; }
+section.note p { margin-bottom: 0.9rem; }
+@media (max-width: 800px) { section.note { padding-top: 2.5rem; } }
+.news { list-style: none; }
+.news li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.8rem; padding: 0.45rem 0; border-bottom: 1px solid #e3e5ec; }
+.news li:last-child { border-bottom: none; }
+.news .when { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.05em; color: var(--muted); padding-top: 0.1rem; }
 .fig { margin: 1.2rem auto 1.8rem; max-width: 720px; }
 .fig img { display: block; width: 100%; height: auto; border: 1px solid #e3e5ec; background: #fff; }
 .fig figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 0.6rem; }

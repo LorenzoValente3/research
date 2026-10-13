@@ -24,13 +24,24 @@
 // sections are light, it is dimmed inside the reading column exactly like the
 // hero cascade behind the hero text, it fades faster, and it sleeps when
 // nothing is alive.
+// Once showers.json has loaded, both passes replay real Geant4 showers instead
+// (14 particle types from 1 to 200 GeV in the OpenDataDetector, one event per
+// type and energy, see notes/showers.html), picked uniformly. Tracks and cell
+// deposits appear in the order of their Geant4 time, scaled so that the speed
+// on screen matches the toy cascade. The toy cascade above stays as the
+// fallback while the file loads or if it is missing.
+var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ? window.fetch('showers.json?v=1')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; })
+    : null;
 [false, true].forEach(function (page) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var canvas = page ? overlay() : document.querySelector('.shower');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var W = 0, H = 0, B = 0, last = 0, nextShower = -1e9;
-    var dots = [], tracks = [], segs = [];
+    var dots = [], tracks = [], segs = [], replays = [], g4 = null;
     var LITE = window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
     var LIFE = page ? 4 : 7, SPEED = 170, MAX_DOTS = LITE ? 1500 : 5000, MAX_TRACKS = LITE ? 150 : 400;
     var E_MAX_DEC = LITE ? 2 : 3, GAP = LITE ? 1.5 : 1.0, PREROLL = LITE ? 0 : 8;
@@ -40,6 +51,17 @@
         : { e: '46,196,214', g: '255,255,255', h: '255,181,71', n: '255,181,71', mu: '220,225,240', nu: '220,225,240' };
     var DASH = { g: [4, 4], n: [1, 5], nu: [2, 8] };
     var MIX = [['e', 0.28], ['g', 0.18], ['h', 0.24], ['n', 0.08], ['mu', 0.1], ['nu', 0.12]];
+    var MAX_SEGS = LITE ? 1500 : 5000, MAX_REPLAYS = LITE ? 4 : 8;
+    // depth (mm from the window start of showers.json) where the ECal ends:
+    // deposits before it take the electron colour, after it the hadron colour
+    var ECAL_END = 400;
+    var NAME = {
+        'e-': 'e<sup>&minus;</sup>', 'e+': 'e<sup>+</sup>', gamma: '&gamma;', 'mu-': '&mu;<sup>&minus;</sup>',
+        'mu+': '&mu;<sup>+</sup>', 'pi+': '&pi;<sup>+</sup>', 'pi-': '&pi;<sup>&minus;</sup>', pi0: '&pi;<sup>0</sup>',
+        'kaon+': 'K<sup>+</sup>', 'kaon-': 'K<sup>&minus;</sup>', kaon0L: 'K<sup>0</sup><sub>L</sub>', proton: 'p',
+        anti_proton: 'p&#772;', neutron: 'n'
+    };
+    var cap = page ? null : document.querySelector('.shower-caption');
 
     var text = page ? null : document.querySelector('.hero-inner'), hole = null;
     function overlay() {
@@ -105,7 +127,63 @@
         q.r0 = 0.6 + 0.3 * Math.log(1 + q.e / 0.1);
         return q;
     }
+    // a Geant4 event placed at (x, y), depth along the direction a (0 = down).
+    // Returns its segments and deposits sorted by time (ns), and the replay
+    // rate in ns per second that moves a light-speed particle at SPEED px/s
+    function replay(ev, x, y, a) {
+        var s = H / 1600, items = [], ca = Math.cos(a), sa = Math.sin(a), emax = 0;
+        function px(u, v) { return [x + s * (u * sa + v * ca), y + s * (u * ca - v * sa)]; }
+        ev.t.forEach(function (t, i) {
+            if (LITE && i % 2) return;
+            var p0 = px(t[0], t[1]), p1 = px(t[2], t[3]);
+            var n = Math.max(1, Math.min(8, Math.ceil(Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) / 20)));
+            for (var j = 0; j < n; j++) {
+                var f0 = j / n, f1 = (j + 1) / n;
+                items.push({
+                    t: t[5] + f1 * (t[6] - t[5]), k: t[4], e: t[7],
+                    x1: p0[0] + f0 * (p1[0] - p0[0]), y1: p0[1] + f0 * (p1[1] - p0[1]),
+                    x2: p0[0] + f1 * (p1[0] - p0[0]), y2: p0[1] + f1 * (p1[1] - p0[1])
+                });
+            }
+        });
+        ev.h.forEach(function (h) { if (h[2] > emax) emax = h[2]; });
+        ev.h.forEach(function (h, i) {
+            if (LITE && i % 2) return;
+            var p = px(h[0], h[1]);
+            // slow neutrons deposit up to microseconds later: compress that tail
+            var t = h[3] < 15 ? h[3] : 15 + 2 * Math.log(h[3] / 15);
+            items.push({
+                t: t, dot: true, x: p[0], y: p[1],
+                r: Math.min(6, 0.7 + 4 * Math.sqrt(h[2] / emax)), c: COLOR[h[0] < ECAL_END ? 'e' : 'h']
+            });
+        });
+        items.sort(function (p, q) { return p.t - q.t; });
+        return { items: items, i: 0, clock: items.length ? items[0].t : 0, rate: SPEED / (s * 300) };
+    }
+    function advance(dt, now) {
+        for (var i = replays.length - 1; i >= 0; i--) {
+            var r = replays[i];
+            r.clock += dt * r.rate;
+            while (r.i < r.items.length && r.items[r.i].t <= r.clock) {
+                var it = r.items[r.i++];
+                if (it.dot) {
+                    if (dots.length < MAX_DOTS && it.y < B) dots.push({ x: it.x, y: it.y, r: it.r, born: now, c: it.c });
+                } else if (segs.length < MAX_SEGS && Math.min(it.y1, it.y2) < B) {
+                    segs.push({ k: it.k, x1: it.x1, y1: it.y1, x2: it.x2, y2: it.y2, e: it.e, born: now });
+                }
+            }
+            if (r.i >= r.items.length) replays.splice(i, 1);
+        }
+    }
+    function pick(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
     function spawn() {
+        if (g4) {
+            if (replays.length < MAX_REPLAYS) {
+                replays.push(replay(pick(g4.ev), W * (0.05 + 0.9 * Math.random()), H * (0.4 * Math.random() - 0.05),
+                    (Math.random() - 0.5) * 0.5));
+            }
+            return;
+        }
         var kind = pickKind();
         var e = Math.pow(10, E_MAX_DEC * Math.random());
         var t = track(kind, W * (0.05 + 0.9 * Math.random()), -10, (Math.random() - 0.5) * 0.5, e);
@@ -130,6 +208,16 @@
             x += window.scrollX;
             y += window.scrollY;
             B = f ? f.getBoundingClientRect().top + window.scrollY : document.documentElement.scrollHeight;
+        }
+        if (g4) {
+            // every particle type, only the top energies so that every click shows
+            if (replays.length >= MAX_REPLAYS) return;
+            var ev = pick(g4.big);
+            replays.push(replay(ev, x, y, (Math.random() - 0.5) * 0.5));
+            if (cap) cap.innerHTML = 'Geant4 &middot; ' + ev.E + ' GeV ' + (NAME[ev.p] || ev.p) +
+                ' in the OpenDataDetector &middot; <a href="notes/showers.html">about</a>';
+            run(true);
+            return;
         }
         var e = Math.pow(10, E_MAX_DEC - Math.random());
         var t = track(['e', 'g', 'h'][Math.floor(3 * Math.random())], x, y, (Math.random() - 0.5) * 0.5, e);
@@ -181,6 +269,7 @@
             spawn();
             nextShower = now + GAP * (1 + Math.random());
         }
+        advance(dt, now);
         var born = [];
         for (var i = tracks.length - 1; i >= 0; i--) {
             var p = tracks[i];
@@ -290,7 +379,7 @@
         last = now;
         step(dt, now);
         draw(now);
-        if (page && !tracks.length && !dots.length && !segs.length) { running = false; return; }
+        if (page && !tracks.length && !dots.length && !segs.length && !replays.length) { running = false; return; }
         requestAnimationFrame(frame);
     }
     function run(on) {
@@ -305,6 +394,25 @@
         window.addEventListener('resize', resize);
         // the canvas ignores the pointer, the hero (or the document) takes the click
         (page ? document : canvas.parentNode).addEventListener('click', fire);
+        if (G4DATA) {
+            G4DATA.then(function (d) {
+                if (dead || !d || !d.ev || !d.ev.length) return;
+                g4 = d;
+                g4.big = d.ev.filter(function (ev) { return ev.E >= 20; });
+                if (!g4.big.length) g4.big = d.ev;
+                if (cap) {
+                    cap.innerHTML = 'Geant4 showers of 14 particle types, 1 to 200 GeV, in the OpenDataDetector. ' +
+                        'Click anywhere &middot; <a href="notes/showers.html">about</a>';
+                    cap.hidden = false;
+                }
+                if (page) return;
+                // swap the toy cascade for a Geant4 scene already under way
+                tracks = []; dots = []; segs = [];
+                nextShower = -1e9;
+                for (var t = last - PREROLL; t < last; t += 1 / 30) step(1 / 30, t);
+                draw(last);
+            });
+        }
         if (page) return;
         for (var t = -PREROLL; t < 0; t += 1 / 30) step(1 / 30, t);
         draw(0);
