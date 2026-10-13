@@ -56,7 +56,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=28">
+    <link rel="stylesheet" href="style.css?v=29">
 </head>
 <body>
 
@@ -66,9 +66,9 @@
         <span class="sub">Particle physics &#9670; Machine learning</span>
     </a>
     <div class="nav-links">
+        <a href="#research">Research</a>
         <a href="#about">About</a>
         <a href="#news">News</a>
-        <a href="#research">Research</a>
         <a href="#publications">Publications</a>
         <a href="#talks">Talks</a>
         <a href="#teaching">Teaching</a>
@@ -84,8 +84,7 @@
         <div class="hero-text">
             <div class="tagline">PhD candidate &middot; University of Hamburg</div>
             <div class="avail">Open to postdoc positions starting in 2027</div>
-            <p>I work on generative models for the simulation of particle showers in calorimeters. Detailed simulation with Geant4 dominates the computing budget of collider experiments, and learned surrogates have so far been tied to the one detector whose data trained them.</p>
-            <p>My thesis makes <strong>one generative shower model reusable across calorimeter geometries</strong>. Pre-trained on several detectors, it adapts to a new one with two orders of magnitude fewer Geant4 showers than a model trained from scratch.</p>
+            <p>I build generative models that simulate particle showers in calorimeters. My thesis makes <strong>one shower model reusable across calorimeter geometries</strong>: pre-trained on several detectors, it adapts to a new one with two orders of magnitude fewer Geant4 showers than a model trained from scratch.</p>
         </div>
         <div class="portrait">
             <img src="images/me_hero.jpg?v=2" alt="Lorenzo Valente">
@@ -93,27 +92,41 @@
         <div class="hero-links">
             <a href="cv/Lorenzo_Valente_CV.pdf" target="_blank"><svg aria-hidden="true"><use href="images/icons.svg#file-lines"/></svg> CV</a>
             <a href="https://inspirehep.net/authors/3080236" target="_blank"><svg aria-hidden="true"><use href="images/icons.svg#atom"/></svg> INSPIRE-HEP</a>
-            <a href="https://scholar.google.com/citations?user=N3N457YAAAAJ" target="_blank"><svg aria-hidden="true"><use href="images/icons.svg#google-scholar"/></svg> Scholar</a>
-            <a href="https://orcid.org/0009-0007-0080-8738" target="_blank"><svg aria-hidden="true"><use href="images/icons.svg#orcid"/></svg> ORCID</a>
             <a href="https://github.com/LorenzoValente3" target="_blank"><svg aria-hidden="true"><use href="images/icons.svg#github"/></svg> GitHub</a>
-            <a href="https://huggingface.co/lorenzov506" target="_blank"><img src="images/logos/huggingface.svg" alt=""> Hugging Face</a>
-            <a href="https://www.linkedin.com/in/lorenzo-valente-491881201" target="_blank"><svg aria-hidden="true"><use href="images/icons.svg#linkedin"/></svg> LinkedIn</a>
             <a href="mailto:lorenzo.valente@uni-hamburg.de"><svg aria-hidden="true"><use href="images/icons.svg#envelope"/></svg> email</a>
         </div>
     </div>
 </header>
 
+<section class="block" id="research">
+    <div class="wrap">
+        <h2>Research</h2>
+        <h3>Multi-geometry pre-training</h3>
+        <p>I condition a flow matching transformer for shower point clouds on the calorimeter geometry and pre-train it on several detectors. Fine-tuned on a detector it has never seen, it matches a model trained from scratch on a full dataset with two orders of magnitude fewer Geant4 showers (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</p>
+        <figure class="fig">
+            <img src="images/sample_efficiency_allegro.png" width="1800" height="1539" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for the longitudinal profile, the radial profile, the cell energy spectrum and their geometric mean, comparing training from scratch with fine-tuning from the LEMURS, SimpleBox and Mini pre-trainings">
+            <figcaption>FCCee-ALLEGRO, a calorimeter outside the pre-training pool: sliced Wasserstein distance to Geant4 against the number of training showers, from scratch and fine-tuned. Bands: &plusmn; one standard deviation over five seeds. Dashed line: Geant4 statistical resolution. From arXiv:2608.18233.</figcaption>
+        </figure>
+        <h3>Cross-geometry transfer</h3>
+        <p>The first step: a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>).</p>
+        <h3>Datasets</h3>
+        <p>I produce the pre-training data with Geant4 and DD4hep for a family of sampling calorimeters (<a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">code</a>, <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank">data</a>). Along the way I develop extensions to <a href="https://github.com/fast-sim/ddFastSim" target="_blank">ddFastSim</a>, the DD4hep fast simulation framework.</p>
+        <h3>Now</h3>
+        <p>Fine-tuning still needs Geant4 showers from every new detector. I am now conditioning the model on a numerical description of the calorimeter, its materials and layers, so that a new geometry enters as an input and not as a new training set.</p>
+    </div>
+</section>
+
 <section class="block" id="about">
     <div class="wrap">
         <h2>About</h2>
-        <p>I am a PhD candidate at the Institute of Experimental Physics of the University of Hamburg, in the group of Gregor Kasieczka. Before Hamburg I studied physics in Bologna, where my master's thesis was on real-time anomaly detection at CMS. I am also a classical pianist.</p>
+        <p>I am a PhD candidate in Gregor Kasieczka's group at the University of Hamburg. Before that I studied physics in Bologna. I am also a classical pianist.</p>
         <ul class="timeline">
             <li class="has-logo">
                 <img class="logo" width="52" height="52" src="images/logos/uhh.svg" alt="">
                 <div class="entry">
                 <div class="when">October 2023 to present</div>
                 <div class="what">PhD in Physics</div>
-                <div class="where">University of Hamburg, Institute of Experimental Physics. Generative models for fast calorimeter simulation, pre-training and transfer across detector geometries. Supervisor: Prof. Gregor Kasieczka, co-supervisor Dr. Frank Gaede (DESY).</div>
+                <div class="where">University of Hamburg. Supervisor Prof. Gregor Kasieczka, co-supervisor Dr. Frank Gaede (DESY).</div>
             </div>
             </li>
             <li class="has-logo">
@@ -121,7 +134,7 @@
                 <div class="entry">
                 <div class="when">April to July 2023</div>
                 <div class="what">Erasmus internship</div>
-                <div class="where">Instituto de Astrofísica de Canarias (IAC), Tenerife. Deep learning classification of heavy nuclei in cosmic rays, funded by an Erasmus+ traineeship grant. Supervisors: Dr. Mónica Vázquez Acosta and Dr. Miguel Molero González.</div>
+                <div class="where">Instituto de Astrofísica de Canarias (IAC), Tenerife. Deep learning classification of heavy nuclei in cosmic rays.</div>
             </div>
             </li>
             <li class="has-logo">
@@ -129,7 +142,7 @@
                 <div class="entry">
                 <div class="when">September 2020 to March 2023</div>
                 <div class="what">Master's degree in Physics</div>
-                <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/28788/" target="_blank">Variational Autoencoder Application for real-time Anomaly Detection at CMS</a>, supervisor Prof. Daniele Bonacorsi.</div>
+                <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/28788/" target="_blank">Variational Autoencoder Application for real-time Anomaly Detection at CMS</a>.</div>
             </div>
             </li>
             <li class="has-logo">
@@ -137,7 +150,7 @@
                 <div class="entry">
                 <div class="when">April to August 2021</div>
                 <div class="what">Erasmus+ exchange semester</div>
-                <div class="where">Ludwig Maximilian University of Munich. Courses: Machine Learning in Fundamental Physics (S. Krippendorf), Radiation Detectors for Medical Applications.</div>
+                <div class="where">Ludwig Maximilian University of Munich.</div>
             </div>
             </li>
             <li class="has-logo">
@@ -145,7 +158,7 @@
                 <div class="entry">
                 <div class="when">September 2016 to July 2020</div>
                 <div class="what">Bachelor's degree in Physics</div>
-                <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/id/eprint/21033/" target="_blank">Reconstruction of non-prompt charmed baryon &Lambda;<sub>c</sub> with Boosted Decision Trees</a>, supervisor Prof. Andrea Alici.</div>
+                <div class="where">University of Bologna. Thesis: <a href="https://amslaurea.unibo.it/id/eprint/21033/" target="_blank">Reconstruction of non-prompt charmed baryon &Lambda;<sub>c</sub> with Boosted Decision Trees</a>.</div>
             </div>
             </li>
             <li class="has-logo">
@@ -171,24 +184,6 @@
             <li><span class="when">May 2026</span><span>Invited talk on ML and detector simulation at <a href="https://indico.cern.ch/event/1537360/contributions/7068481/" target="_blank">LHCP 2026</a> in Paris.</span></li>
             <li><span class="when">Mar 2026</span><span>CaloClouds3 published in <a href="https://doi.org/10.1088/1748-0221/21/03/P03018" target="_blank">JINST 21 (2026) P03018</a>.</span></li>
         </ul>
-    </div>
-</section>
-
-<section class="block" id="research">
-    <div class="wrap">
-        <h2>Research</h2>
-        <h3>Multi-geometry pre-training</h3>
-        <p>I extend a flow matching transformer for shower point clouds with conditioning on the calorimeter geometry and pre-train it across several detectors. Fine-tuned on a detector it has never seen, it needs two orders of magnitude fewer Geant4 showers to match a model trained from scratch on a full dataset (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</p>
-        <figure class="fig">
-            <img src="images/sample_efficiency_allegro.png" width="1800" height="1539" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for the longitudinal profile, the radial profile, the cell energy spectrum and their geometric mean, comparing training from scratch with fine-tuning from the LEMURS, SimpleBox and Mini pre-trainings">
-            <figcaption>Sample efficiency on FCCee-ALLEGRO, a calorimeter outside the pre-training pool. Sliced Wasserstein distance to Geant4 as a function of the number of training showers, for training from scratch and for fine-tuning from each pre-trained model. Bands span the mean &plusmn; one standard deviation over five seeds, and the dashed line is the Geant4-versus-Geant4 statistical resolution. From arXiv:2608.18233.</figcaption>
-        </figure>
-        <h3>Cross-geometry transfer</h3>
-        <p>The first step was to show that a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>).</p>
-        <h3>Datasets</h3>
-        <p>The pre-training data are produced with Geant4 and DD4hep for a family of sampling calorimeters, from simulation to training-ready HDF5 (<a href="https://github.com/FLC-QU-hep/multi-calorimeter-dataset" target="_blank">multi-calorimeter-dataset</a>). The datasets themselves are on the <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank">University of Hamburg research data repository</a>. Along the way I develop extensions to <a href="https://github.com/fast-sim/ddFastSim" target="_blank">ddFastSim</a>, the DD4hep fast simulation framework.</p>
-        <h3>Now</h3>
-        <p>Fine-tuning still needs Geant4 showers from every new detector. I am now conditioning the shower model on a numerical description of the calorimeter, its materials and its layer structure, so that a new geometry enters the model as an input and not as a new training set. The question behind it is which changes of a detector such a model can absorb without any new simulation, and how many Geant4 showers are enough when it cannot.</p>
     </div>
 </section>
 
@@ -288,9 +283,9 @@
         <ul class="talks">
             <li>AI in Physics<div class="venue">MSc course, University of Hamburg, tutor, 2025</div></li>
             <li>Python tutorial<div class="venue">BSc course, University of Hamburg, tutor, 2025</div></li>
-            <li>Investigating the Behavior of Generative Models in Particle Physics under Recursive Training<div class="venue">BSc thesis co-supervision, University of Hamburg, 2025. The model collapse study of the <a href="https://arxiv.org/abs/2609.28661" target="_blank">ACAT 2025 proceedings</a> comes from this thesis.</div></li>
+            <li>Investigating the Behavior of Generative Models in Particle Physics under Recursive Training<div class="venue">BSc thesis co-supervision, University of Hamburg, 2025. Source of the model collapse study in the <a href="https://arxiv.org/abs/2609.28661" target="_blank">ACAT 2025 proceedings</a>.</div></li>
         </ul>
-        <p style="margin-top:1rem">As a postdoc I would like to co-supervise Bachelor's and Master's students on generative models for detector simulation. If you are a student looking for a project in this area, write me an email.</p>
+        <p style="margin-top:1rem">I would like to co-supervise Bachelor's and Master's students on generative models for detector simulation. Students looking for a project can email me.</p>
     </div>
 </section>
 
@@ -324,7 +319,7 @@
     <div style="margin-top:1rem">Lorenzo Valente &middot; University of Hamburg</div>
 </footer>
 
-<script src="shower.js?v=18"></script>
+<script src="shower.js?v=20"></script>
 
 </body>
 </html>

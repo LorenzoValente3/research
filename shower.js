@@ -29,9 +29,11 @@
 // type and energy, see notes/showers.html), picked uniformly. Tracks and cell
 // deposits appear in the order of their Geant4 time, scaled so that the speed
 // on screen matches the toy cascade. The toy cascade above stays as the
-// fallback while the file loads or if it is missing.
+// fallback while the file loads or if it is missing. The file is fetched only
+// after the page has loaded, so it never delays text and images on a phone.
 var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ? window.fetch('showers.json?v=1')
+    ? new Promise(function (r) { window.addEventListener('load', r); })
+        .then(function () { return window.fetch('showers.json?v=1'); })
         .then(function (r) { return r.ok ? r.json() : null; })
         .catch(function () { return null; })
     : null;
@@ -401,8 +403,8 @@ var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce
                 g4.big = d.ev.filter(function (ev) { return ev.E >= 20; });
                 if (!g4.big.length) g4.big = d.ev;
                 if (cap) {
-                    cap.innerHTML = 'Geant4 showers of 14 particle types, 1 to 200 GeV, in the OpenDataDetector. ' +
-                        'Click anywhere &middot; <a href="notes/showers.html">about</a>';
+                    cap.innerHTML = 'Geant4 showers in the OpenDataDetector &middot; click anywhere &middot; ' +
+                        '<a href="notes/showers.html">about</a>';
                     cap.hidden = false;
                 }
                 if (page) return;

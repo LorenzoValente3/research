@@ -277,9 +277,13 @@ footer {
     .hero-links { gap: 0.5rem; }
     .fig-small { float: none; width: auto; max-width: 100%; margin: 0.4rem 0 1.4rem; }
     .hero-links a { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
-    .hero { min-height: auto; padding: 3rem 1.2rem 3rem; }
+    .hero { min-height: auto; padding: 2rem 1.2rem 3rem; }
     .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .portrait { max-width: 260px; order: 1; }
+    .portrait { max-width: 160px; order: 1; }
+    .nav-name .sub { display: none; }
+    .nav-links a { padding: 0.45rem 0.6rem; }
+    .hero-inner > .hero-links a { flex: 1 1 auto; text-align: center; }
+    .shower-caption { max-width: 90%; }
     section.block { padding: 3.5rem 1.2rem; }
     .timeline { margin-left: 56px; }
     .timeline .logo { left: -56px; width: 44px; height: 44px; }
