@@ -169,13 +169,16 @@ var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce
             while (r.i < r.items.length && r.items[r.i].t <= r.clock) {
                 var it = r.items[r.i++];
                 if (it.dot) {
-                    if (dots.length < MAX_DOTS && it.y < B) dots.push({ x: it.x, y: it.y, r: it.r, born: now, c: it.c });
-                } else if (segs.length < MAX_SEGS && Math.min(it.y1, it.y2) < B) {
+                    if (it.y < B) dots.push({ x: it.x, y: it.y, r: it.r, born: now, c: it.c });
+                } else if (Math.min(it.y1, it.y2) < B) {
                     segs.push({ k: it.k, x1: it.x1, y1: it.y1, x2: it.x2, y2: it.y2, e: it.e, born: now });
                 }
             }
             if (r.i >= r.items.length) replays.splice(i, 1);
         }
+        // over the cap the oldest, most faded items go, so a new shower always shows
+        if (g4 && dots.length > MAX_DOTS) dots.splice(0, dots.length - MAX_DOTS);
+        if (g4 && segs.length > MAX_SEGS) segs.splice(0, segs.length - MAX_SEGS);
     }
     function pick(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
     function spawn() {
@@ -202,7 +205,7 @@ var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce
         var sel = window.getSelection && window.getSelection();
         if (dead || tracks.length >= MAX_TRACKS || (!page && !running)) return;
         // someone selecting text or double clicking is reading, not playing
-        if (ev.detail > 1 || (sel && String(sel))) return;
+        if (sel && String(sel)) return;
         if (el.closest && el.closest(page ? 'a, button, nav, .hero, footer' : 'a, button')) return;
         var x = ev.clientX - c.left, y = ev.clientY - c.top;
         if (page) {
@@ -212,12 +215,13 @@ var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce
             B = f ? f.getBoundingClientRect().top + window.scrollY : document.documentElement.scrollHeight;
         }
         if (g4) {
-            // every particle type, only the top energies so that every click shows
-            if (replays.length >= MAX_REPLAYS) return;
+            // only the top energies and no muons, so that every click shows;
+            // a click always fires, the oldest replay makes room
+            if (replays.length >= MAX_REPLAYS) replays.shift();
             var ev = pick(g4.big);
             replays.push(replay(ev, x, y, (Math.random() - 0.5) * 0.5));
             if (cap) cap.innerHTML = 'Geant4 &middot; ' + ev.E + ' GeV ' + (NAME[ev.p] || ev.p) +
-                ' in the OpenDataDetector &middot; <a href="notes/showers.html">about</a>';
+                ' &middot; click anywhere &middot; <a href="notes/showers.html">about</a>';
             run(true);
             return;
         }
@@ -400,7 +404,7 @@ var G4DATA = window.fetch && !window.matchMedia('(prefers-reduced-motion: reduce
             G4DATA.then(function (d) {
                 if (dead || !d || !d.ev || !d.ev.length) return;
                 g4 = d;
-                g4.big = d.ev.filter(function (ev) { return ev.E >= 20; });
+                g4.big = d.ev.filter(function (ev) { return ev.E >= 20 && !/^mu/.test(ev.p); });
                 if (!g4.big.length) g4.big = d.ev;
                 if (cap) {
                     cap.innerHTML = 'Geant4 showers in the OpenDataDetector &middot; click anywhere &middot; ' +
