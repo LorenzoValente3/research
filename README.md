@@ -33,6 +33,7 @@ A single static page, no framework and no build step.
 | `notes/` | short pages: the paper summaries and how the showers are made |
 | `images/` | portrait, figures and logos, paper thumbnails in `images/papers/` |
 | `cv/` | the CV served by the site |
+| `tests/` | checks of `shower.js` without a browser (`test_shower_click.js`, `test_g4_replay.js`) and Firefox headless screenshots at several widths (`screens.sh`, `screens_full.sh`). Run from the repo root with `sbatch tests/test.sh` or `sbatch tests/screens.sh`, output in `tests/out/` (ignored by git) |
 
 To preview it locally:
 
