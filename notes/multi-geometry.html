@@ -27,7 +27,7 @@
 <section class="block note">
     <div class="wrap">
         <h2>Multi-geometry pre-training, in short</h2>
-        <p class="venue">Summary of T. Buss, H. Day-Hall, F. Gaede, G. Kasieczka, K. Krüger, P. McKeown, L. Valente, <a href="https://arxiv.org/abs/2608.18233" target="_blank">Transferable Fast Calorimeter Shower Generation via Multi-Geometry Pre-training</a>, arXiv:2608.18233, accepted in JINST.</p>
+        <p class="venue">Summary of T. Buss, H. Day-Hall, F. Gaede, G. Kasieczka, K. Krüger, P. McKeown, L. Valente, <a href="https://doi.org/10.1088/1748-0221/21/10/P10041" target="_blank">Transferable Fast Calorimeter Shower Generation via Multi-Geometry Pre-training</a>, JINST 21 (2026) P10041, <a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>.</p>
         <h3>The problem</h3>
         <p>Detailed <a href="https://geant4.web.cern.ch/" target="_blank">Geant4</a> simulation of calorimeter showers takes most of the computing budget of a high-energy physics experiment. Generative models can produce showers much faster, but so far each of them has been tied to the detector it was trained on, and every new geometry needed a large dataset of its own.</p>
         <h3>The idea</h3>
@@ -35,7 +35,7 @@
         <p>The pre-training detectors do not have to be real. SimpleBox is a family of 10<sup>4</sup> box calorimeters that spans the plane of sampling fraction and number of layers. We compare it with pre-training on four realistic calorimeters (LEMURS), with the same budget of four million showers.</p>
         <figure class="fig">
             <img src="../images/sample_efficiency_allegro.png" width="1800" height="1539" loading="lazy" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for training from scratch and fine-tuning from each pre-trained model">
-            <figcaption>Distance to Geant4 on FCCee-ALLEGRO, a calorimeter outside the pre-training pool, as a function of the number of fine-tuning showers. Lower is better. From arXiv:2608.18233.</figcaption>
+            <figcaption>Distance to Geant4 on FCCee-ALLEGRO, a calorimeter outside the pre-training pool, as a function of the number of fine-tuning showers. Lower is better. From JINST 21 (2026) P10041.</figcaption>
         </figure>
         <h3>What we found</h3>
         <p>On FCCee-ALLEGRO, a noble-liquid calorimeter outside the pre-training pool, with a thousand showers for fine-tuning, the sliced Wasserstein distance to Geant4 drops by a factor of 5.2 with the synthetic prior and 8.0 with the realistic one, compared with training from scratch. With more fine-tuning showers the synthetic prior performs better than the realistic one. On this target, geometric diversity is enough, and detector realism is not what makes the transfer work.</p>

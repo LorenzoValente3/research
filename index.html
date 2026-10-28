@@ -103,10 +103,10 @@
     <div class="wrap">
         <h2>Research</h2>
         <h3>Multi-geometry pre-training</h3>
-        <p>I condition a flow matching transformer for shower point clouds on the calorimeter geometry and pre-train it on several detectors. Fine-tuned on a detector it has never seen, it matches a model trained from scratch on a full dataset with two orders of magnitude fewer Geant4 showers (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</p>
+        <p>I condition a flow matching transformer for shower point clouds on the calorimeter geometry and pre-train it on several detectors. Fine-tuned on a detector it has never seen, it matches a model trained from scratch on a full dataset with two orders of magnitude fewer Geant4 showers (<a href="https://doi.org/10.1088/1748-0221/21/10/P10041" target="_blank">JINST 21 (2026) P10041</a>).</p>
         <figure class="fig">
             <a href="images/sample_efficiency_allegro.png" target="_blank"><img src="images/sample_efficiency_allegro.png" width="1800" height="1539" alt="Sliced Wasserstein distance to Geant4 against the number of training showers on FCCee-ALLEGRO, for the longitudinal profile, the radial profile, the cell energy spectrum and their geometric mean, comparing training from scratch with fine-tuning from the LEMURS, SimpleBox and Mini pre-trainings"></a>
-            <figcaption>FCCee-ALLEGRO, a calorimeter outside the pre-training pool: sliced Wasserstein distance to Geant4 against the number of training showers, from scratch and fine-tuned. Bands: &plusmn; one standard deviation over five seeds. Dashed line: Geant4 statistical resolution. From arXiv:2608.18233.</figcaption>
+            <figcaption>FCCee-ALLEGRO, a calorimeter outside the pre-training pool: sliced Wasserstein distance to Geant4 against the number of training showers, from scratch and fine-tuned. Bands: &plusmn; one standard deviation over five seeds. Dashed line: Geant4 statistical resolution. From JINST 21 (2026) P10041.</figcaption>
         </figure>
         <h3>Cross-geometry transfer</h3>
         <p>The first step: a shower model trained on one calorimeter transfers to another with a fraction of the data (<a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>).</p>
@@ -178,7 +178,7 @@
     <div class="wrap">
         <h2>News</h2>
         <ul class="news">
-            <li><span class="when">Oct 2026</span><span>Multi-geometry pre-training accepted in JINST (<a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a>).</span></li>
+            <li><span class="when">Oct 2026</span><span>Multi-geometry pre-training published in <a href="https://doi.org/10.1088/1748-0221/21/10/P10041" target="_blank">JINST 21 (2026) P10041</a>.</span></li>
             <li><span class="when">Sep 2026</span><span>Proceedings of LHCP 2026 (<a href="https://arxiv.org/abs/2609.30403" target="_blank">arXiv:2609.30403</a>) and ACAT 2025 (<a href="https://arxiv.org/abs/2609.28661" target="_blank">arXiv:2609.28661</a>) are out.</span></li>
             <li><span class="when">Aug 2026</span><span>Multi-geometry pre-training on arXiv, presented at <a href="https://indico.physi.uni-heidelberg.de/event/1277/contributions/4147/" target="_blank">EuCAIFCon 2026</a> in Heidelberg.</span></li>
             <li><span class="when">Jul 2026</span><span>Cross-geometry transfer published in <a href="https://doi.org/10.1088/1748-0221/21/07/P07037" target="_blank">JINST 21 (2026) P07037</a>.</span></li>
@@ -197,9 +197,9 @@
                 <a class="thumb" href="images/papers/mgg.png?v=2" target="_blank"><img src="images/papers/mgg.png?v=2" width="1200" height="772" loading="lazy" alt="Transfer pipeline: AllShowers pre-trained on SimpleBox or on LEMURS, then fine-tuned on FCC-ee CLD, ODD, Par04 and the held-out FCC-ee ALLEGRO"></a>
                 <div class="entry">
                 <div class="title">Transferable Fast Calorimeter Shower Generation via Multi-Geometry Pre-training <span class="pick">start here</span></div>
-                <div class="venue">T. Buss, H. Day-Hall, F. Gaede, G. Kasieczka, K. Krüger, P. McKeown, L. Valente. <a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv:2608.18233</a> (2026), accepted in JINST.</div>
+                <div class="venue">T. Buss, H. Day-Hall, F. Gaede, G. Kasieczka, K. Krüger, P. McKeown, L. Valente. <a href="https://doi.org/10.1088/1748-0221/21/10/P10041" target="_blank">JINST 21 (2026) P10041</a>.</div>
                 <div class="contrib"><span>Contribution:</span> Led the study design, produced the five-detector dataset, ran the training campaigns and the analysis, wrote the paper. Alphabetical authorship, corresponding author.</div>
-                <div class="links"><a href="https://arxiv.org/pdf/2608.18233" target="_blank">pdf</a> &middot; <a href="notes/multi-geometry.html">summary</a> &middot; <a href="https://github.com/FLC-QU-hep/AllShowers/tree/multi-geometry" target="_blank">code</a> &middot; <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank">data</a> &middot; <a href="https://huggingface.co/FLC-QU-hep" target="_blank">weights</a> &middot; <a href="https://inspirehep.net/api/literature/3192605?format=bibtex" target="_blank">BibTeX</a></div>
+                <div class="links"><a href="https://arxiv.org/abs/2608.18233" target="_blank">arXiv</a> &middot; <a href="notes/multi-geometry.html">summary</a> &middot; <a href="https://github.com/FLC-QU-hep/AllShowers/tree/multi-geometry" target="_blank">code</a> &middot; <a href="https://www.fdr.uni-hamburg.de/record/19103" target="_blank">data</a> &middot; <a href="https://huggingface.co/FLC-QU-hep" target="_blank">weights</a> &middot; <a href="https://inspirehep.net/api/literature/3192605?format=bibtex" target="_blank">BibTeX</a></div>
                 </div>
             </li>
             <li class="has-thumb">
